@@ -1,0 +1,3058 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameTime">
+    <meta name="author" content="">
+
+    <!-- Stylesheets -->   
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../static/css/gametime.css" rel="stylesheet">
+    <!-- <link href="css/google-code-prettify/prettify.css"
+      rel="stylesheet"></script> -->
+
+    <title>GameTime: Toolkit for Timing Analysis of Software</title>
+  </head>
+
+  <body>
+    <div id="mainnav" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle"
+              data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../">GameTime</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../about">About</a></li>
+            <li><a href="../getting-started">Getting started</a></li>
+            <li><a href="../tutorials">Tutorials</a></li>
+            <li><a href="../documentation">Documentation</a></li>
+            <li><a href="../contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="jumbotron-hero" class="jumbotron">
+      <div class="container">
+        <h1>Show and tell.</h1>
+        <p>Tutorials for working with GameTime.</p>
+      </div>
+    </div> <!-- jumbotron-hero -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3" id="sidenav-wrapper">
+          <div id="sidenav" role="navigation">
+            <div class="well well-sm">
+              <ul class="nav">
+                <li><a href="#overview" class="navigate">Overview</a></li>
+                <li><a href="#tutorials-sandbox" class="navigate">
+                  Sandbox Tutorials</a>
+                  <div class="well well-sm no-margin-bottom">
+                    <ul class="nav">
+                      <li><a href="#tutorial-sandbox-1" class="navigate">
+                        Tutorial 1:
+                        Generating the Basis and Worst-Case Paths</a></li>
+                      <li><a href="#tutorial-sandbox-2" class="navigate">
+                        Tutorial 2:
+                        Inlining Functions</a></li>
+                      <li><a href="#tutorial-sandbox-3" class="navigate">
+                        Tutorial 3:
+                        Unrolling Loops</a></li>
+                      <li><a href="#tutorial-sandbox-4" class="navigate">
+                        Tutorial 4:
+                        Overcomplete basis</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li><a href="#tutorials-gui" class="navigate">GUI Tutorials</a>
+                  <div class="well well-sm no-margin-bottom">
+                    <ul class="nav">
+                      <li><a href="#tutorial-gui-1" class="navigate">
+                        Tutorial 1:
+                        Generating the Basis and Worst-Case Paths</a></li>
+                      <li><a href="#tutorial-gui-2" class="navigate">
+                        Tutorial 2:
+                        Inlining Functions</a></li>
+                      <li><a href="#tutorial-gui-3" class="navigate">
+                        Tutorial 3:
+                        Unrolling Loops</a></li>
+                      <li><a href="#tutorial-gui-4" class="navigate">
+                        Tutorial 4:
+                        Overcomplete basis</a></li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div id="overview">
+            <div class="page-h1"><h1>Overview</h1></div>
+            <div>
+              <p>A <em>project</em> in GameTime refers to the code that needs
+                to be analyzed, along with the resulting analyses and
+                generated test cases. During a project, there are two main ways
+                to interact with GameTime:</p>
+              <ol>
+                <li>
+                  <p><a href="#tutorials-sandbox">
+                    <em>Through a Python script</em></a>: GameTime has
+                    a Python interface that can be imported as a module
+                    in Python scripts. The distribution includes a Python
+                    script that can be used to perform common features
+                    of the GameTime analysis.</p>
+                </li>
+                <li>
+                  <p><a href="#tutorials-gui">
+                    <em>Through a graphical user interface</em></a>:
+                    GameTime has a graphical user interface that can be
+                    used to perform the common features of the
+                    GameTime analysis.</p>
+                </li>
+              </ol>
+              <p>The tutorials 1, 2 and 3 below require GameTime version 1.0
+                (or newer) whereas tutorial 4 requires version 1.5 (or newer)
+                of GameTime, available 
+                <a href="../getting-started/#download">here</a>. If you run
+                into any issues when following a tutorial, please 
+                <a href="../contact">contact us</a> and we will respond as soon
+                as possible.</p>
+            </div>
+          </div>
+
+          <div id="tutorials-sandbox">
+            <div class="page-h1"><h1>Sandbox Tutorials</h1></div>
+            <div>
+              <p>The GameTime distribution contains a <em>sandbox
+                directory</em> called <tt>sandbox</tt> where you can add
+                your own projects. The directory also contains a ready-made
+                Python script that uses the Python interface to the GameTime
+                toolkit. This <em>sandbox script</em>, available at
+                <tt>sandbox/analyzeProject.py</tt>, allows you to analyze
+                the code within your projects.</p>
+
+              <p>The GameTime distribution also contains the shortcut to
+                an executable, available at <tt>gametime-cli</tt>, which
+                sets several environment variables and provides a command-line
+                interface to GameTime. The tutorials below will use this
+                command-line interface to interact with the sandbox script.</p>
+
+              <p>For brevity, when used in the tutorials below, the phrase
+                &quot;basis (or feasible) paths&quot; of code
+                being analyzed refers to the basis (or feasible) paths in
+                the control-flow graph for that code.</p>
+
+              <div id="tutorial-sandbox-1">
+                <h2>Tutorial 1: Generating the Basis and Worst-Case Paths</h2>
+                <p>In this tutorial, you will explore how to use the sandbox
+                  script to generate the test cases that correspond to
+                  the basis paths of exemplar code. You will then use
+                  pre-obtained measurements of these test cases to generate
+                  other test cases that correspond to
+                  the five worst-case paths (or the paths with the longest
+                  predicted timings).</p>
+                <ol>
+                  <li id="tutorial-sandbox-1-step-1">
+                    <p>Run the executable <tt>gametime-cli</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a command-line interface to GameTime:
+                      a window that contains a Cygwin prompt. Navigate to
+                      the root directory of the GameTime distribution.</p>
+                  </li>
+                  <li id="tutorial-sandbox-1-step-2">
+                    <p>The GameTime distribution includes several sample
+                      projects within the <tt>demo/sandbox</tt> directory.
+                      Copy the directory labeled <tt>modexp_unrolled</tt>,
+                      which constitutes the GameTime project for this
+                      tutorial, to the <tt>sandbox</tt> directory:
+                      <code>cp -r demo/sandbox/modexp_unrolled sandbox</code></p>
+                  </li>
+                  <li id="tutorial-sandbox-1-step-3">
+                    <p>Examine the contents of the copied directory:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>modexp_simple.c</tt>,
+                          contains an implementation of modular exponentiation,
+                          where a base (the global variable <code>base</code>)
+                          is raised to an exponent (the global variable
+                          <code>exponent</code>), modulo a large prime number.
+                          The code that will be analyzed is present
+                          in a function called <code>modexp_simple</code>.</p>
+
+                        <div class="callout callout-info">
+                          <p>The function implements the
+                            <a href="http://en.wikipedia.org/wiki/Exponentiation_by_squaring#Basic_method">
+                              <em>square-and-multiply</em> algorithm</a>,
+                            with one conditional statement for each bit of
+                            the exponent. Since there are only four conditional
+                            statements, this implementation is specific to
+                            four-bit exponents.</p>
+                        </div>
+                      </li>
+                      <li>
+                        <p>The <em>project configuration file</em>,
+                          <tt>projectConfig.xml</tt>, is an XML file that,
+                          as the name implies, contains many options that
+                          allow you to configure a GameTime project.
+                          In particular, the following tags are relevant for
+                          this tutorial:</p>
+                        <ul>
+                          <li>
+                            <p><code>&lt;location&gt;</code>: The value of this
+                              tag is the location of the file that contains
+                              the code to be analyzed. This location can be
+                              either absolute or relative: if relative,
+                              the location is resolved with respect to
+                              the directory that contains the project
+                              configuration XML file.</p>
+                          </li>
+                          <li>
+                            <p><code>&lt;analysis-function&gt;</code>:
+                              The value of this tag is the name of the function
+                              that is to be analyzed.</p>
+                          </li>
+                          <li>
+                            <p><code>&lt;ilp-solver&gt;</code>: The value of
+                              this tag is the name of the ILP solver that will
+                              be used by GameTime for its analysis. For this
+                              tutorial, the value is <code>glpk</code>, which
+                              indicates that the ILP solver from GLPK will
+                              be used.</p>
+                          </li>
+                          <li>
+                            <p><code>&lt;smt-solver&gt;</code>: The value of
+                              this tag is the name of the SMT solver that will
+                              be used by GameTime for its analysis. For this
+                              tutorial, the value is <code>z3</code>, which
+                              indicates that Z3, the SMT solver from Microsoft,
+                              will be used. You can change this to
+                              <code>boolector</code> if you would like GameTime
+                              to use Boolector instead.</p>
+                          </li>
+                        </ul>
+                        <p>The
+                          <a href="../documentation#project-configuration-files">
+                          documentation</a> presents a comprehensive guide to
+                          all of the tags in the project configuration file.</p>
+                      </li>
+                      <li>
+                        <p>The directory <tt>simulations</tt>, which contains
+                          files that have the timings of the test cases
+                          that correspond to the basis paths of
+                          <code>modexp_simple</code>. The subdirectory
+                          <tt>ptarmsim-1.0</tt> contains the timings as
+                          measured on the
+                          <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                          PTARM simulator</a>. (To install the PTARM simulator,
+                          please refer to
+                          <a href="../getting-started/#step-3">step 3 of
+                          the installation guide</a>. However, you do
+                          <em>not</em> need to install the simulator for
+                          this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-sandbox-1-step-4">
+                    <p>Run the following command at the prompt:</p>
+
+                    <p><code>analyze -a
+                      sandbox/modexp_unrolled/projectConfig.xml -b</code></p>
+
+                    <p>This command will generate the test cases that
+                      correspond to the basis paths of the code in
+                      <code>modexp_simple</code>.</p>
+
+                    <div class="callout callout-info">
+                      <p>This command runs the sandbox script. The path
+                        provided to the command-line argument <code>-a</code>
+                        provides the script with the path of a project
+                        configuration file. This path can be either absolute
+                        or relative: if relative, as in this command,
+                        the location of the file is resolved against
+                        the current working directory.</p>
+
+                      <p>The command-line argument <code>-b</code>
+                        instructs the script to generate the test cases
+                        that correspond to the basis paths of the code
+                        that is being analyzed.</p>
+                    </div>
+                   </li>
+                  <li id="tutorial-sandbox-1-step-5">
+                    <p>If the previous step completes successfully, there
+                      should be two new directories inside the project
+                      directory <tt>sandbox/modexp_simple</tt>:</p>
+                    <ul>
+                      <li>
+                        <p>The directory called <tt>modexp_simple-gt</tt>
+                        is a temporary directory created by GameTime.
+                        It contains the temporary files that GameTime
+                        creates and needs as it performs its analysis.
+                        Note that the temporary directory has the same name
+                        as the function that contains the code being analyzed
+                        (<code>modexp_simple</code>), with the suffix
+                        <tt>-gt</tt>.</p>
+                      </li>
+                      <li>
+                        <p>The directory called <tt>analysis</tt> contains
+                          the results of the GameTime analysis that was just
+                          performed. The subdirectory <tt>basis</tt> stores
+                          all of the information regarding the basis paths
+                          of the code in <code>modexp_simple</code>.
+                          In particular, the subdirectory <tt>case</tt>
+                          contains the test cases that correspond to
+                          the (five) basis paths of the code in
+                          <code>modexp_simple</code>: the file labeled
+                          <tt>case-<em>n</em></tt> contains the test case
+                          that corresponds to the <em>n</em>th basis path.</p>
+
+                        <div class="callout callout-info">
+                          <p>Each of these test cases should be an assignment
+                            to the global variables in
+                            <code>modexp_simple</code>. For this tutorial,
+                            each test case assigns a value to the global
+                            variable <code>exponent</code>. Each test case
+                            will drive the execution of the function along
+                            a basis path.</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-sandbox-1-step-6">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>modexp_simple</code> and
+                      the corresponding test cases, you can measure these
+                      test cases on the platform of your choice. For this
+                      tutorial, however, you can use the timing measurements
+                      already collected on the PTARM simulator,
+                      as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>z3-glpk</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.
+                      (If you changed the SMT solver to Boolector in
+                      <a href="#tutorial-sandbox-1-step-3">step 3</a>,
+                      you can use the file <tt>boolector-glpk</tt>
+                      for the next step instead.)</p>
+
+                    <div class="callout callout-info">
+                      <p>In the file, lines that begin with the
+                        <code>&#35;</code> character are comments. Each of
+                        the other lines in the file has the number of
+                        a basis path and the measurement of the corresponding
+                        test case on the PTARM simulator, with the values
+                        separated by whitespace.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-1-step-7">
+                    <p>Run the following command in the root directory of
+                      the GameTime distribution:</p>
+
+                    <p><code>analyze -a
+                      sandbox/modexp_unrolled/projectConfig.xml -w -n 5 \<br/>
+                      --values
+                      sandbox/modexp_unrolled/simulations/ptarmsim-1.0/z3-glpk</code>
+                    </p>
+
+                    <p>This command will generate the test cases that
+                      correspond to the five worst-case feasible paths of
+                      the code in <code>modexp_simple</code>.</p>
+
+                    <div class="callout callout-info">
+                      <p>The command-line argument <code>-w</code>
+                        instructs the script to generate the test cases
+                        that correspond to the worst-case feasible paths of
+                        the code that is being analyzed. The value of
+                        the command-line argument <code>-n</code> notifies
+                        the script of the number of these paths that should
+                        be generated.</p>
+
+                      <p>The path provided to the command-line argument
+                        <code>--values</code> is the path for the file
+                        that contains the measurements for the five basis
+                        paths that were generated earlier. This command
+                        thus assumes that the basis paths were generated
+                        in a prior analysis.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-1-step-8">
+                    <p>If the previous step completes successfully,
+                      the directory called <tt>analysis</tt>, inside
+                      the project directory <tt>sandbox/modexp_simple</tt>,
+                      should now contain another subdirectory called
+                      <tt>worst</tt>.</p>
+
+                    <p>As with the subdirectory <tt>basis</tt> from
+                      <a href="#tutorial-sandbox-1-step-5">step 5</a>,
+                      the subdirectory <tt>worst</tt> also contains
+                      the subdirectory <tt>case</tt>, which stores
+                      the test cases that correspond to the (five)
+                      worst-case feasible paths of the code in
+                      <code>modexp-simple</code>: the files are
+                      arranged in decreasing order of predicted
+                      timings, with the file labeled <tt>case-1</tt>
+                      storing the test case for the worst-case feasible
+                      path, and the file labeled <tt>case-5</tt> storing
+                      the test case for the fifth worst-case feasible path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Notice that the test case for the predicted worst-case
+                        feasible path assigns a value of <code>0xf</code>
+                        to the global variable <code>exponent</code>.
+                        All of the four bits of <code>exponent</code> are thus
+                        set to <code>1</code>. This indicates that
+                        the worst-case feasible path occurs when all four
+                        conditional statements in the code of
+                        <code>modexp_simple</code> evaluate to true.
+                        In the test cases for the other four predicted
+                        worst-case feasible paths, exactly one bit of
+                        <code>exponent</code> is <code>0</code>, which implies
+                        that exactly one of the four conditional statements
+                        evaluates to false.</p>
+                    </div>
+
+                    <p>The predicted timings themselves are stored in
+                      the file labeled <tt>predicted-worst</tt> inside
+                      <tt>analysis</tt>. Each line has the number of
+                      a (worst-case) feasible path and the predicted
+                      timing of the corresponding test case, with
+                      the values separated by whitespace.</p>
+                  </li>
+                </ol>
+              </div>
+
+              <div id="tutorial-sandbox-2">
+                <h2>Tutorial 2: Inlining Functions</h2>
+                <p>In this tutorial, as in the previous tutorial, you will
+                  explore how to use the sandbox script to generate the test
+                  cases that correspond to the basis paths of exemplar code.
+                  However, this exemplar code calls another function, which
+                  thus needs to be inlined for the GameTime analysis.
+                  You will then use pre-obtained measurements of these test
+                  cases to generate other test cases that correspond to
+                  the five best-case paths (or the paths with the shortest
+                  predicted timings).</p>
+                <ol>
+                  <li id="tutorial-sandbox-2-step-1">
+                    <p>Run the executable <tt>gametime-cli</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a command-line interface to GameTime:
+                      a window that contains a Cygwin prompt. Navigate to
+                      the root directory of the GameTime distribution.</p>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-2">
+                    <p>Copy the directory labeled <tt>speed</tt>, which
+                      constitutes the GameTime project for this tutorial,
+                      from the <tt>demo/sandbox</tt> directory to
+                      the <tt>sandbox</tt> directory:
+                      <code>cp -r demo/sandbox/speed sandbox</code></p>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-3">
+                    <p>Examine the contents of the copied directory:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>speed.c</tt>, contains code that
+                          calculates the final (one-dimensional) speed of
+                          an object with an initial speed (the global
+                          variable <code>initial_speed</code>) and constant
+                          acceleration (the global variable <code>acc</code>),
+                          after a certain amount of time (the global variable
+                          <code>time</code>). However, the final speed cannot
+                          exceed a certain predefined limit (the constant
+                          <code>LIMIT</code>, which here is assigned to
+                          <code>100</code>). The code that will be analyzed is
+                          present in a function called
+                          <code>calculate_final_speed</code>. To ensure that
+                          the final speed does not exceed the limit,
+                          the function <code>saturate</code> is used: this
+                          is the function that needs to be inlined.</p>
+                      </li>
+                      <li>
+                        <p>The project configuration file,
+                          <tt>projectConfig.xml</tt>.
+                          <a href="#tutorial-sandbox-1-step-3">Step 3 of
+                          tutorial 1</a> describes some of the tags in
+                          this file, and the
+                          <a href="../documentation#project-configuration-files">documentation</a>
+                          presents a comprehensive guide to all of
+                          these tags.</p>
+                        <p>In particular, note that the value of the tag
+                          <code>&lt;inline&gt;</code> is <code>saturate</code>,
+                          which indicates that this function needs to be
+                          inlined into the function that is to be analyzed:
+                          <code>calculate_final_speed</code>, which is
+                          the value of the tag
+                          <code>&lt;analysis-function&gt;</code>.</p>
+                      </li>
+                      <li>
+                        <p>The directory <tt>simulations</tt>, which contains
+                          files that have the timings of the test cases
+                          that correspond to the basis paths of
+                          <code>calculate_final_speed</code>, after
+                          the function <code>saturate</code> has been inlined.
+                          The subdirectory <tt>ptarmsim-1.0</tt> contains
+                          the timings as measured on the
+                          <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                          PTARM simulator</a>. (To install the PTARM simulator,
+                          please refer to
+                          <a href="../getting-started/#step-3">step 3 of
+                          the installation guide</a>. However, you do
+                          <em>not</em> need to install the simulator for
+                          this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-4">
+                    <p>Run the following command at the prompt:</p>
+
+                    <p><code>analyze -a
+                      sandbox/speed/projectConfig.xml -b</code></p>
+
+                    <p>This command will generate the test cases that
+                      correspond to the basis paths of the code in
+                      <code>calculate_final_speed</code>, after inlining
+                      the function <code>saturate</code>. A description of
+                      this command is provided in
+                      <a href="#tutorial-sandbox-1-step-4">step 4 of
+                      tutorial 1.</a></p>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-5">
+                    <p>If the previous step completes successfully, there
+                      should be two new directories inside the project
+                      directory <tt>sandbox/speed</tt>:</p>
+                    <ul>
+                      <li>
+                        <p>The directory called <tt>speed-gt</tt>
+                        is a temporary directory created by GameTime.
+                        It contains the temporary files that GameTime
+                        creates and needs as it performs its analysis.
+                        In particular, GameTime uses the file
+                        <tt>speed-gt-inlined.c</tt> for its analysis, which
+                        contains the same code as that in <tt>speed.c</tt>,
+                        but the code in <code>saturate</code> is inlined into
+                        the code in <code>calculate_final_speed</code>.</p>
+                      </li>
+                      <li>
+                        <p>The directory called <tt>analysis</tt> contains
+                          the results of the GameTime analysis that was just
+                          performed. The subdirectory <tt>basis</tt> stores
+                          all of the information regarding the basis paths
+                          of the code in <code>calculate_final_speed</code>
+                          (with the code in <code>saturate</code> inlined).
+                          In particular, the subdirectory <tt>case</tt>
+                          contains the test cases that correspond to
+                          the (three) basis paths of the code: the file labeled
+                          <tt>case-<em>n</em></tt> contains the test case
+                          that corresponds to the <em>n</em>th basis path.</p>
+
+                        <div class="callout callout-info">
+                          <p>Each of these test cases should be an assignment
+                            to the global variables in
+                            <code>calculate_final_speed</code>. Each test case
+                            will drive the execution of the function along
+                            a basis path.</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-6">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>calculate_final_speed</code>
+                      (with the code in <code>saturate</code> inlined) and
+                      the corresponding test cases, you can measure these
+                      test cases on the platform of your choice. For this
+                      tutorial, however, you can use the timing measurements
+                      already collected on the PTARM simulator,
+                      as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>z3-glpk</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.
+                      (If you changed the SMT solver to Boolector in
+                      the project configuration file, you can use the file
+                      <tt>boolector-glpk</tt> for the next step instead.)
+                      These files are further described in
+                      <a href="#tutorial-sandbox-1-step-6">step 6 of
+                      tutorial 1</a>.</p>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-7">
+                    <p>Run the following command in the root directory of
+                      the GameTime distribution:</p>
+
+                    <p><code>analyze -a
+                      sandbox/speed/projectConfig.xml -v -n 3 \<br/>
+                      --values
+                      sandbox/speed/simulations/ptarmsim-1.0/z3-glpk</code>
+                    </p>
+
+                    <p>This command will generate the test cases that
+                      correspond to the three best-case feasible paths of
+                      the code in <code>calculate_final_speed</code>
+                      (with the code in <code>saturate</code> inlined).</p>
+
+                    <div class="callout callout-info">
+                      <p>The command-line argument <code>-v</code>
+                        instructs the script to generate the test cases
+                        that correspond to the best-case feasible paths of
+                        the code that is being analyzed. The other
+                        command-line arguments are further described in
+                        <a href="#tutorial-sandbox-1-step-7">step 7 of
+                        tutorial 1</a>.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-2-step-8">
+                    <p>If the previous step completes successfully,
+                      the directory called <tt>analysis</tt>, inside
+                      the project directory <tt>sandbox/speed</tt>,
+                      should now contain another subdirectory called
+                      <tt>best</tt>.</p>
+
+                    <p>As with the subdirectory <tt>basis</tt> from
+                      <a href="#tutorial-sandbox-2-step-5">step 5</a>,
+                      the subdirectory <tt>best</tt> also contains
+                      the subdirectory <tt>case</tt>, which stores
+                      the test cases that correspond to the (three)
+                      best-case feasible paths of the code in
+                      <code>calcuate_final_speed</code> (with the code in
+                      <code>saturate</code> inlined): the files are
+                      arranged in increasing order of predicted
+                      timings, with the file labeled <tt>case-1</tt>
+                      storing the test case for the best-case feasible
+                      path, and the file labeled <tt>case-3</tt> storing
+                      the test case for the third best-case feasible path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Notice that the test case for the predicted best-case
+                        feasible path sets both the acceleration
+                        (<code>acc</code>) and the time (<code>time</code>)
+                        to zero, and sets the initial speed
+                        (<code>initial_speed</code>) to <code>0x65</code>.
+                        These values produce a final speed (<code>0x65</code>)
+                        that satisfies the first condition of the only
+                        <code>if</code>-statement in the function
+                        <code>saturate</code>: <code>value > LIMIT</code>,
+                        where <code>LIMIT</code> is <code>100</code>
+                        (or <code>0x64</code>).</p>
+
+                      <p>The test case for the next feasible path sets
+                        the global variables to values that produce a final
+                        speed. This speed does not satisfy the first condition
+                        of the <code>if</code>-statement, but satisfies
+                        the second condition. The execution of this feasible
+                        path thus needs two conditions to be evaluated, which
+                        results in a slightly longer timing for the path.
+                        Similarly, the execution of the third feasible path
+                        results in the evaluation of all three conditions,
+                        which results in the longest timing among the three
+                        predicted best-case feasible paths.</p>
+
+                      <p>The three feasible paths produced also correspond to
+                        the only three feasible paths through the function
+                        <code>calculate_final_speed</code>, after the function
+                        <code>saturate</code> has been inlined.</p>
+                    </div>
+
+                    <p>The predicted timings themselves are stored in
+                      the file labeled <tt>predicted-best</tt> inside
+                      <tt>analysis</tt>. Each line has the number of
+                      a (best-case) feasible path and the predicted
+                      timing of the corresponding test case, with
+                      the values separated by whitespace.</p>
+                  </li>
+                </ol>
+              </div>
+
+              <div id="tutorial-sandbox-3">
+                <h2>Tutorial 3: Unrolling Loops</h2>
+                <p>In this tutorial, as in the previous two, you will explore
+                  how to use the sandbox script to generate the test cases
+                  that correspond to the basis paths of exemplar code.
+                  This code performs modular exponentiation, as
+                  the exemplar code from <a href="#tutorial-sandbox-1">tutorial 1</a>
+                  does, but employs a <code>for</code>-loop to loop through
+                  the bits of the exponent. This loop needs to be unrolled
+                  for the GameTime analysis. You will then use pre-obtained
+                  measurements of the generated test cases to generate
+                  the test cases that correspond to all of
+                  the feasible paths.</p>
+                <ol>
+                  <li id="tutorial-sandbox-3-step-1">
+                    <p>Run the executable <tt>gametime-cli</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a command-line interface to GameTime:
+                      a window that contains a Cygwin prompt. Navigate to
+                      the root directory of the GameTime distribution.</p>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-2">
+                    <p>Copy the directory labeled <tt>modexp</tt>, which
+                      constitutes the GameTime project for this tutorial,
+                      from the <tt>demo/sandbox</tt> directory to
+                      the <tt>sandbox</tt> directory:
+                      <code>cp -r demo/sandbox/modexp sandbox</code></p>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-3">
+                    <p>Examine the contents of the copied directory, which
+                      should be similar to
+                      <a href="#tutorial-sandbox-1-step-3">those in
+                      tutorial 1</a>:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>modexp_simple.c</tt>,
+                          contains an implementation of modular exponentiation,
+                          where a base (the global variable <code>base</code>)
+                          is raised to an exponent (the global variable
+                          <code>exponent</code>), modulo a large prime number.
+                          The code that will be analyzed is present
+                          in a function called <code>modexp_simple</code>.
+                          Notice that, unlike the code in tutorial 1,
+                          this implementation uses a <code>for</code>-loop.</p>
+                      </li>
+                      <li>
+                        <p>The project configuration file,
+                          <tt>projectConfig.xml</tt>.
+                          <a href="#tutorial-sandbox-1-step-3">Step 3 of
+                          tutorial 1</a> describes some of the tags in
+                          this file, and the
+                          <a href="../documentation#project-configuration-files">documentation</a>
+                          presents a comprehensive guide to all of
+                          these tags.</p>
+                      </li>
+                      <li>
+                        <p>The directory <tt>simulations</tt>, which contains
+                          files that have the timings of the test cases
+                          that correspond to the basis paths of
+                          <code>modexp_simple</code>. The subdirectory
+                          <tt>ptarmsim-1.0</tt> contains the timings as
+                          measured on the
+                          <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                          PTARM simulator</a>. (To install the PTARM simulator,
+                          please refer to
+                          <a href="../getting-started/#step-3">step 3 of
+                          the installation guide</a>. However, you do
+                          <em>not</em> need to install the simulator for
+                          this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-4">
+                    <p>Run the following command at the prompt:</p>
+
+                    <p><code>analyze -a
+                      sandbox/modexp/projectConfig.xml -b</code></p>
+
+                    <p>This command should generate the test cases that
+                      correspond to the basis paths of the code in
+                      <code>modexp_simple</code>. A description of
+                      this command is provided in
+                      <a href="#tutorial-sandbox-1-step-4">step 4 of
+                      tutorial 1.</a> However, this time, GameTime ends
+                      its analysis with a notification that loops in
+                      the code have been detected. These loops need
+                      to be unrolled for any further analysis.</p>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-5">
+                    <p>As per the instructions from GameTime, navigate
+                      to the temporary directory generated by GameTime
+                      for its analysis, located at
+                      <tt>sandbox/modexp/modexp_simple-gt</tt>.
+                      Examine the <em>loop configuration file</em>
+                      <tt>loop-config</tt>, and edit the third item
+                      of the first comma-separated line from <code>1</code> to
+                      <code>4</code>.</p>
+
+                    <div class="callout callout-info">
+                      <p>The loop configuration file informs the user
+                        of the locations of the loops within the file
+                        that is analyzed by GameTime, and allows the user
+                        to direct GameTime to unroll each loop a certain
+                        number of times.</p>
+
+                      <p>In the file, each line is a comma-separated
+                        list of three items: the name of the file that
+                        is analyzed by GameTime and contains loops
+                        (<code>modexp_simple-gt.c</code>), the line
+                        number of the header of the loop (<code>24</code>),
+                        and the number of times this loop should be
+                        unrolled (with a default value of <code>1</code>).</p>
+
+                      <p>Note that, as declared in the loop configuration file,
+                        the file that is analyzed by GameTime is not
+                        the original file, but a copy of the file made by
+                        GameTime for the purposes of its analysis. This copy
+                        is stored within the temporary directory created by
+                        GameTime (<tt>modexp_simple-gt</tt>).</p>
+
+                      <p>Also note that, when the third item of the first line
+                        is edited from <code>1</code> to <code>4</code>,
+                        the only loop in the code, whose header is at line 24,
+                        will be unrolled four times. This should result in
+                        code that is functionally equivalent to the code in
+                        tutorial 1, which performed modular exponentiation with
+                        four-bit exponents.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-6">
+                    <p>Run the following command at the prompt:</p>
+
+                    <p><code>analyze -a
+                      sandbox/modexp/projectConfig.xml --unroll-loops
+                      -b</code></p>
+
+                    <p>This command should generate the test cases that
+                      correspond to the basis paths of the code in
+                      <code>modexp_simple</code>, after its only loop
+                      has been unrolled.</p>
+
+                    <div class="callout callout-info">
+                      <p>The command-line argument <code>--unroll-loops</code>
+                        instructs GameTime to unroll the loops in the code
+                        using the bounds provided by the user in the loop
+                        configuration file generated during loop detection.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-7">
+                    <p>If the previous step completes successfully, there
+                      should be another directory inside the project
+                      directory <tt>sandbox/modexp_simple</tt> besides
+                      the temporary directory <tt>modexp_simple-gt</tt>:</p>
+
+                    <p>The directory called <tt>analysis</tt> contains
+                      the results of the GameTime analysis that was just
+                      performed. The subdirectory <tt>basis</tt> stores
+                      all of the information regarding the basis paths
+                      of the code in <code>modexp_simple</code> (after its
+                      loop has been unrolled). In particular, the subdirectory
+                      <tt>case</tt> contains the test cases that correspond to
+                      the (five) basis paths of the code in
+                      <code>modexp_simple</code> (after its loop has been
+                      unrolled): the file labeled
+                      <tt>case-<em>n</em></tt> contains the test case
+                      that corresponds to the <em>n</em>th basis path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Each of these test cases should be an assignment
+                        to the global variables in
+                        <code>modexp_simple</code>. For this tutorial,
+                        as in <a href="#tutorial-sandbox-1-step-5">step 5
+                        of tutorial 1</a>, each test case assigns a value
+                        to the global variable <code>exponent</code>.
+                        Each test case will drive the execution of
+                        the function along a basis path.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-8">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>modexp_simple</code> (after its
+                      loop has been unrolled) and the corresponding test cases,
+                      you can measure these test cases on the platform of your
+                      choice. For this tutorial, however, you can use
+                      the timing measurements already collected on
+                      the PTARM simulator, as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>z3-glpk</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.
+                      (If you changed the SMT solver to Boolector in
+                      the project configuration file, you can use the file
+                      <tt>boolector-glpk</tt> for the next step instead.)
+                      These files are further described in
+                      <a href="#tutorial-sandbox-1-step-6">step 6 of
+                      tutorial 1</a>.</p>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-9">
+                    <p>Run the following command in the root directory of
+                      the GameTime distribution:</p>
+
+                    <p><code>analyze -a
+                      sandbox/modexp/projectConfig.xml -d \<br/>
+                      --values
+                      sandbox/modexp/simulations/ptarmsim-1.0/z3-glpk</code>
+                    </p>
+
+                    <p>This command will generate the test cases that
+                      correspond to all (sixteen) of the feasible paths of
+                      the code in <code>modexp_simple</code>
+                      (after its loop has been unrolled).</p>
+
+                    <div class="callout callout-info">
+                      <p>The command-line argument <code>-d</code>
+                        instructs the script to generate the test cases
+                        that correspond to all of the feasible paths of
+                        the code that is being analyzed, in
+                        <em>decreasing</em> order of their predicted timings.
+                        The other command-line arguments are further described
+                        in <a href="#tutorial-sandbox-1-step-7">step 7 of
+                        tutorial 1</a>.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-3-step-10">
+                    <p>If the previous step completes successfully,
+                      the directory called <tt>analysis</tt>, inside
+                      the project directory <tt>sandbox/modexp_simple</tt>,
+                      should now contain another subdirectory called
+                      <tt>all-dec</tt>.</p>
+
+                    <p>As with the subdirectory <tt>basis</tt> from
+                      <a href="#tutorial-sandbox-3-step-7">step 7</a>,
+                      the subdirectory <tt>all-dec</tt> also contains
+                      the subdirectory <tt>case</tt>, which stores
+                      the test cases that correspond to all of the (sixteen)
+                      feasible paths of the code in <code>modexp-simple</code>:
+                      the files are arranged in decreasing order of predicted
+                      timings, with the file labeled <tt>case-1</tt>
+                      storing the test case for the (predicted) worst-case
+                      feasible path, and the file labeled <tt>case-16</tt>
+                      storing the test case for the (predicted) best-case
+                      feasible path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Notice that the test case for the predicted worst-case
+                        feasible path assigns a value of <code>0xf</code>
+                        to the global variable <code>exponent</code>.
+                        All of the four bits of <code>exponent</code> are thus
+                        set to <code>1</code>. This indicates that
+                        the worst-case feasible path occurs when all four
+                        conditional statements in the code of
+                        <code>modexp_simple</code> evaluate to true.
+                        Also notice that the test case for the predicted
+                        best-case feasible path assigns a value of
+                        <code>0x0</code> to the global variable
+                        <code>exponent</code>, which implies that all
+                        four conditional statements evaluate to false.</p>
+                    </div>
+
+                    <p>The predicted timings themselves are stored in
+                      the file labeled <tt>predicted-all-dec</tt> inside
+                      <tt>analysis</tt>. Each line has the number of
+                      a feasible path and the predicted timing of
+                      the corresponding test case, with
+                      the values separated by whitespace.</p>
+                  </li>
+                </ol>
+              </div>
+              
+              
+              <div id="tutorial-sandbox-4">
+                <h2>Tutorial 4: Overcomplete Basis</h2>
+                <p>In this tutorial, we explore how to obtain more accurate
+                  estimates on the length of the longest path by generating
+                  (and measuring) more basis paths than the minimum number
+                  necessary. (As described in 
+                  <a href="http://arxiv.org/abs/1506.05893">this paper</a>). We
+                  will analyze a sample implementation of the
+                  <a href="https://en.wikipedia.org/wiki/Insertion_sort">
+                  insertion-sort algorithm</a> sorting an array of a fixed size.
+                </p>
+                
+                <p>We begin by doing the same kind of analysis as in the
+                  previous tutorial. Then we explore how to generate and use
+                  larger sets of basis paths to obtain better and more accurate
+                  predictions of the longest paths. Finally, we compare the
+                  results obtained by both methods.</p>
+                <ol>
+                  <h3>Setup</h3>
+                  <li id="tutorial-sandbox-4-step-1">
+                    <p>Run the executable <tt>gametime-cli</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a command-line interface to GameTime:
+                      a window that contains a Cygwin prompt. Navigate to
+                      the root directory of the GameTime distribution.</p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-2">
+                  <p> Copy the directory labeled <tt>insertion_sort</tt>, which
+                      constitutes the GameTime project for this tutorial,
+                      from the <tt>demo/sandbox</tt> directory to
+                      the <tt>sandbox</tt> directory:
+                      <code>cp -r demo/sandbox/insertion_sort sandbox</code></p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-3">
+                    <p>Examine the contents of the copied directory</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>insertion_sort.c</tt>,
+                          contains an implementation of the insertion-sort
+                          algorithm which sorts the global array of integers:
+                          <code>a</code>. We will analyze the code in the
+                          function <code>insertion_sort</code>. The constant
+                          <code>LENGTH</code> specifies the size of the array
+                          <code>a</code>. To keep the generated intermediate
+                          results small and the analysis fast, we use
+                          <code>LENGTH = 8</code> in the tutorial.</p>
+                      </li>
+                      <li>
+                        <p>The project configuration file,
+                          <tt>projectConfig.xml</tt>.
+                          <a href="#tutorial-sandbox-1-step-3">Step 3 of
+                          tutorial 1</a> describes some of the tags in
+                          this file, and the
+                          <a href="../documentation#project-configuration-files">
+                          documentation</a> presents a comprehensive guide to
+                          all of these tags.</p>
+                      </li>
+                      <li>
+                        <p>In this tutorial, we will introduce and describe a
+                          new parameter <code>maximum-error-scale-factor</code>
+                          in the <tt>projectConfig.xml</tt> file which directs
+                          GameTime to produce more accurate predictions.</p>
+                      </li>
+                      <li>
+                      <p>In the tutorial, we will first run GameTime using the
+                        same approach as in the previous tutorials. Then we run
+                        GameTime with different algorithm for two different
+                        values of <code>maximum-error-scale-factor</code>. The
+                        subdirectory <tt>simulations/ptarmsim-1.0</tt>, contains
+                        timings of basis paths obtained using the
+                        <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                        PTARM simulator</a> for the three cases: 
+                        <tt>original-glpk-z3, error-10-glpk-z3,
+                        error-5-glpk-z3</tt>. (To install the PTARM simulator, 
+                        please refer to <a href="../getting-started/#step-3">
+                        step 3 of the installation guide</a>. However, you do
+                        <em>not</em> need to install the simulator for
+                        this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-4">
+                    <p>The insertion-sort implementation analyzed in this
+                      tutorial contains two loops. As in the previous
+                      <a href="#tutorial-sandbox-3">tutorial</a>, we first
+                      unroll the loops up to the specified limit to obtain a
+                      loop-free code. Make sure you are in the root directory of
+                      the GameTime distribution and then run the following
+                      command at the prompt:</p>
+
+                    <p><code>analyze -a
+                      sandbox/insertion_sort/projectConfig.xml -b</code></p>
+
+                    <p>As in the previous tutorial, GameTime ends
+                      its analysis with a notification that loops in
+                      the code have been detected. These loops need
+                      to be unrolled for any further analysis.</p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-5">
+                    <p>As per the instructions from GameTime, navigate
+                      to the temporary directory generated by GameTime
+                      for its analysis, located at
+                      <tt>sandbox/insertion_sort/insertion_sort-gt</tt>.
+                      Examine the <em>loop configuration file</em>
+                      <tt>loop-config</tt>, and edit the third item
+                      of the first comma-separated line from <code>1</code> to
+                      <code>4</code> and the third item on the second
+                      comma-separated line from<code>1</code> to <code>7</code>
+                    </p>
+                      
+                    <div class="callout callout-info">
+                      <p>For more details on the individual entries, see the
+                        description of the <tt>loop-config</tt> file in the
+                        previous <a href="#tutorial-sandbox-4-step-5">tutorial.
+                        </a> Note that the first line in the
+                        <tt>loop-config</tt> file corresponds to the inner 
+                        <code>while</code> loop and the second line to the outer
+                        <code>for</code> loop in the <code>insertion_sort</code>
+                        function.</p>
+                        
+                        <p>Notice that we specify that the inner
+                          <code>while</code> loop in the insertion sort is 
+                          unrolled only <code>4</code> times. In general, to
+                          always sort the input, the loop needs to be unrolled
+                          as many as <code>7</code> times. This intentional
+                          underspecification of the loop bound, yields a smaller
+                          program easier to analyse while still providing a
+                          relevant test cases and performance.</p>
+                    </div>
+                  </li>
+                  <h3>Timing Analysis</h3>
+                  <li id="tutorial-sandbox-4-step-6">
+                    <p>Now that we specified the desired unrolling, run the
+                      following command at the prompt:</p>
+
+                    <p><code>analyze -a
+                      sandbox/insertion_sort/projectConfig.xml --unroll-loops
+                      -b</code></p>
+
+                    <p>The command generates the test cases that
+                      correspond to the basis paths of the code in the function
+                      <code>insertion_sort</code>, after its loops have been
+                      unrolled (c.f.,
+                      <a href="#tutorial-sandbox-3-step-5">previous tutorial
+                      </a>) the 
+                      specified number of times.</p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-7">
+                    <p>If the previous step completes successfully,
+                      another directory (<tt>analysis</tt>) should be created
+                      inside the project directory 
+                      <tt>sandbox/insertion_sort</tt> (besides the temporary
+                      directory <tt>insertion_sort-gt</tt>).</p>
+
+                    <p>The directory <tt>analysis</tt> contains
+                      the results of the GameTime analysis that was just
+                      performed, see the previous
+                      <a href="#tutorial-sandbox-4-step-7">tutorial</a>
+                      for its description.</p>
+                   
+                    <p>For example, each generated test case, in directory
+                      <tt>sandbox/insertion_sort/analysis/basis/case</tt> is
+                      an assignment to the global array <code>a</code> that is
+                      then being sorted in the <code>insertion_sort</code>
+                      function. In total, 23 test cases should have been
+                      generated.</p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-8">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>insertion_sort</code> (after its
+                      loops have been unrolled) and the corresponding test
+                      cases, you can measure these test cases on the platform of
+                      your choice. For this tutorial, however, you can use
+                      the timing measurements already collected on
+                      the PTARM simulator, as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>original-glpk-z3</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial for the basis paths generated in the previous
+                      steps. The file should contain 23 measurements; one for
+                      each basis path. Note that, in total, there is a total of
+                      15000 paths in the control flow graph.</p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-9">
+                    <p>Run the following command in the root directory of
+                      the GameTime distribution:</p>
+                    <p><code>analyze -a
+                      sandbox/insertion_sort/projectConfig.xml -w -n 3 \<br/>
+                      --values
+                      sandbox/insertion_sort/simulations/ptarmsim-1.0/original-glpk-z3
+                      </code>
+                    </p>
+
+                    <p>This command will generate the test cases corresponding
+                      to the three feasible paths with the longest predicted
+                      length (specified by <code>-w -n 3</code> flag) using the
+                      measurements from the given file.</p>
+                      
+                    <div class="callout callout-info">
+                      <p>The <tt>projectConfig.xml</tt> file for the analyzed
+                      project has been configured to use Z3 SMT solver and the
+                      GLPK ILP solver. We provide measurements for the basis
+                      generated using these solvers.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-10">
+                    <p>If the previous step completes successfully,
+                      the directory called <tt>analysis</tt>, inside
+                      the project directory <tt>sandbox/insertion_sort</tt>,
+                      should now contain another subdirectory called
+                      <tt>worst</tt>.</p>
+
+                      <p>The subdirectory <tt>analysis/worst/case</tt> should
+                        now contain three files, the contents of which are the
+                        arguments corresponding to the three longest predicted
+                        paths. The predicted lengths of the paths can be found
+                        in the file <tt>analysis/predicted-worst</tt>. As of
+                        time of writing this tutorial, the predicted lengths are
+                        <code>6311, 6150, 6148</code> clock cycles respectively
+                      </p>
+
+                    <div class="callout callout-info">
+                      <p>The lengths in the file <tt>predicted-worst</tt> are
+                        only the predictions for the paths corresponding to test
+                        cases in <tt>analysis/worst/case</tt>. Therefore, if we
+                        actually run the <tt>insertion_sort.c</tt> with the
+                        computed arguments, we expect, due to timing
+                        irregularities, the path lengths to differ.</p>
+                      
+                      <p>We have run the code in <tt>insertion-sort.c</tt> on
+                        the given test cases and measured the following lengths:
+                        <code>5766, 6045, 5605</code>. As expected, the observed
+                        lengths differ from the predicted ones. Note that, due
+                        to timing irregularities, the path that corresponded to
+                        the second longest predicted path is actually longer
+                        than the one that was predicted to be the longest.</p>
+                        
+                      <p>If you have installed a simulator and specified the
+                        loop unrolling in the <tt>loop-config</tt> file, all
+                        values computed in this tutorial and the entire analysis
+                        until this point can be obtained by a single command:
+                        <br><code>
+                          analyze -a sandbox/insertion_sort/projectConfig.xml
+                          -b -m -w -n -3 --unroll-loops
+                        </code><br>
+                        If the above command terminates sucessfully and you have
+                        a simulator installed, GameTime creates a file 
+                        <tt>analysis/measured-word</tt> containing the measured
+                        lengths of the three paths.</p>
+                    </div>
+                  </li>
+                  <h3>Timing Analysis using Overcomplete Basis</h3>
+                  <li id="tutorial-sandbox-4-step-11">
+                    <p>We now describe how to obtain more accurate predictions
+                      of paths lengths. This then allows us to find arguments on
+                      which <code>insertion_sort</code> runs longer than on any
+                      of the inputs computed in the previous steps.</p>
+                      
+                    <p>(Assumming the loops have been unrolled), run the
+                      following command in the gametime root directory (note
+                      that this overwrites the analysis from the previous
+                      steps):
+                      <code>analyze -a sandbox/insertion_sort/projectConfig.xml
+                      -b --unroll-loops --overcomplete_basis</code>
+                    </p>
+                    
+                    <div class="callout callout-info">
+                      <p>The parameter <code>--overcomplete_basis</code> tells
+                        GameTime to generate more than the minimum number of
+                        basis paths necessary. The number of generated paths is
+                        determined by the desired accuracy of the algorithm as
+                        specified by the property
+                        <code>maximum-error-scale-factor</code> in
+                        <tt>sandbox/insertion_sort/projectConfig.xml</tt>. The
+                        parameter can be any real number of value at least
+                        <code>1</code>. The lower the value, the more basis
+                        paths will be generated and more accurate the predicted 
+                        lengths should be.</p>
+                        
+                      <p>Inspect the parameter
+                        <code>maximum-error-scale-factor</code> in 
+                        <tt>sandbox/insertion_sort/projectConfig.xml</tt> file.
+                        Its value should be <code>10.0</code>. In later steps
+                        we change this value and compare the accuracy of
+                        predictions.</p>
+                    </div>
+                    
+                    <p>If the command runs successfully, GameTime should
+                      generate 27 basis paths (out of total number of 15000
+                      paths in the underlying control-flow graph). This can be
+                      checked by inspecting the directory
+                      <tt>analysis/basis/case</tt></p>
+                  </li>
+                  <li id="tutorial-sandbox4-step-12">
+                    <p>To generate predictions using the overcomplete basis
+                      generated in the previous step, we need to use a dedicated
+                      algorithm that can make use of the additional basis paths.
+                      The algorithm is invoked by using the parameter
+                      <code>--ob_extraction</code> (standing for
+                      Overcomplete-Basis extraction).</p>
+                      
+                    <p>If you have not installed a simulator, we provide
+                      measurements of the basis paths on which the algorithm can
+                      be invoked. The measurements are in file
+                      <tt>sandbox/insertion_sort/simulations/ptarmsim-1.0/error-10-glpk-z3</tt>.
+                      You can use GameTime with the <code>--ob_extraction</code>
+                      flag by running:<br>
+                      <code>analyze -a sandbox/insertion_sort/projectConfig.xml
+                        -w -n 3 --ob_extraction \ <br>
+                        --values sandbox/insertion_sort/simulations/ptarmsim-1.0/error-10-glpk-z3
+                      </code></p>
+                  
+                    <p>If you have a simulator installed, (if not, skip this
+                      step), you can obtain measurements and then the predictions
+                      directly by running the following command:
+                      <code>analyze -a sandbox/insertion_sort/projectConfig.xml
+                        -m -w -n 3 --ob_extraction</code></p>
+                        
+                    <div class="callout callout-info">
+                      <p>The flags <code>--overcomplete_basis</code> and
+                        <code>--ob_extraction</code> trigger new algorithms to
+                        compute the (overcomplete) basis and to predict the
+                        lengths of the longest path using this basis. (As
+                        described in <a href="http://arxiv.org/abs/1506.05893">
+                        this paper</a>)
+                      
+                      <p>While the flag <code>--overcomplete_basis</code> has to
+                        be used together with <code>--ob_extraction</code>, the
+                        opposite is not true. The flag
+                        <code>--ob_extraction</code> can be used without
+                        <code>--ovecomplete_basis</code> on the standard minimal
+                        basis generated by GameTime by default.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-13">
+                    <p>If the above command finished succesfully, there should
+                      be a file <tt>predicted-worst</tt> in the analysis
+                      directory with the lengths of the three longest predicted
+                      paths. The version of GameTime, as of writing this
+                      tutorial, generated the predictions:
+                      <code>6078, 6064, 6007</code>. Note that these values are
+                      smaller than the ones in step 10.</p>
+                      
+                    <p>If you have a simulator installed, you can measure the 
+                      actual path lengths for the corresponding inputs. In this
+                      case, the actual measured lengths turn out to be
+                      <code>5826, 6266, 5385</code>. Note that not only are the
+                      measured values closer to the predicted values, they are
+                      also larger than the measured values in step 10 above.</p>
+                      
+                    <div class="callout callout-info" id="tutorial-sandbox-4-step-13-box">
+                      <p>If the flag <code>--ob_extraction</code> is used,
+                        the accuracy of the predictions can be quantified more 
+                        precisely. If the flag is used, GameTime produces two
+                        files <tt>mu-max</tt> and <tt>error-scale-factor</tt> in
+                        the <tt>analysis</tt> subdirectory. Both files
+                        contain a single number. It was
+                        <a href="http://arxiv.org/abs/1506.05893">shown</a> that
+                        if the algorithm predicts (using the
+                        <code>--ob_extraction</code> flag) that the length of a
+                        path is <code>L</code>, then, under normal 
+                        circumstances, the actual length of the path is within
+                        <code>L +/- 2 * mu-max * error-scale-factor</code>. In
+                        particular, to find the real longest paths, it suffices
+                        to generate paths until the difference in the length
+                        from the longest predicted path is more than
+                        <code>2 * mu-max * error-scale-factor</code>.</p>
+                 
+                      <p>The parameter <code>maximum-error-scale-factor</code>
+                        in <tt>projectConfig.xml</tt> file tells GameTime to
+                        generate overcomplete basis so that the
+                        <code>error-scale-factor</code> is at most
+                        <code>maximum-error-scale-factor</code>.</p>
+                        
+                      <p>The value <code>mu-max</code> measures the timing
+                        irregularities in the program and the underlying
+                        platform; bigger values of <code>mu-max</code>
+                        correspond to bigger timing irregularities.</p>
+                        
+                      <p>It is important to stress that, unlike in the second
+                        part of this tutorial, using the
+                        <code>--ob_extraction</code> algorithm, GameTime is able
+                        to provide the error bounds on the generated
+                        predictions. In particular, the standard extraction
+                        procedure is unable to estimate the parameter
+                        <code>mu-max</code> measuring the timing irregularities
+                        in the underlying platform.</p>
+                    </div>
+                    
+                    <p>If the command finished successfully, you should have
+                      <code>mu-max = 74.18, error-scale-factor = 9.67 </code>
+                      values. Using the formula in the box above, this yields
+                      an error bound of <code> 2 * 74.18 * 9.67 = 1435</code>
+                    </p>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-14">
+                    <p>Now modify the value of
+                      <code>maximum-error-scale-factor</code> in
+                      <tt>sandbox/insertion_sort/projectConfig.xml</tt> file
+                      from <code>10.0</code> to <code>5.0</code>. This tell
+                      GameTime to produce more accurate predictions and hence to
+                      generate larger overcomplete basis.</p>
+                      
+                    <p>Rerun the commands from the previous steps to generate an
+                      overcomplete basis and then use provided measurements
+                      (<tt>error-5-glpk-z3</tt>) to generate predictions using
+                      the following two commands:<br>
+                      <code>
+                        analyze -a sandbox/insertion_sort/projectConfig.xml -b
+                            --unroll-loops --overcomplete_basis<br>
+                        analyze -a sandbox/insertion_sort/projectConfig.xml -w
+                            -n 3 --ob_extraction \ <br>
+                            --values sandbox/insertion_sort/simulations/ptarmsim-1.0/error-5-glpk-z3<br>
+                      </code>
+                    </p>
+                    
+                    <p>Note that the more accurate an estimate is required the
+                      longer the basis generation (first command) and the
+                      longest path predictions (second command) takes. On our
+                      machine (MacBook Air with 3.3GHz CPU), the first command
+                      took about 11 minutes to complete. If the above commands
+                      finish without any errors there should be a basis of size
+                      <code>48</code> and the lengths of the three predicted
+                      longest paths are: <code>6110, 6105, 6059</code>.</p>
+                    
+                    <p>When measured, the actual lengths are
+                      <code>6288, 5603, 6427</code>. Note that, not only the
+                      predictions are close to the measurements
+                      (<code>mu-max = 128.60, error-scale-factor = 4.92, 
+                          error_bound = 2 * 128.60 * 4.92 = 1265</code>),
+                      but using a larger basis, we were able to generate longer
+                      paths than in any of the previous instances.</p>
+                       
+                    <div class="callout callout-info">
+                      <p>Generating larger overcomplete basis yields, in
+                        general, better predictions. However, with better
+                        predictions comes bigger complexity. Be aware that as
+                        the basis gets bigger, the algorithm gets necessarily
+                        slower. </p>
+                      
+                      <p>In the extreme case of setting
+                        <code>maximum-error-scale-factor</code> to
+                        <code>1</code>, one can
+                        <a href="http://arxiv.org/abs/1506.05893">prove</a> that
+                        all feasbile paths need to be taken as the basis paths.
+                        Thus, GameTime exhaustively explores all paths in that
+                        case.</p>
+                    </div>
+                  </li>
+                  <li id="tutorial-sandbox-4-step-15">
+                    <p>In this last step of the tutorial we analyse the results
+                      obtained in the three timing analyses perfomed in the
+                      tutorial. The insertion-sort algorithm sorts the array in
+                      the ascending order. Therefore, the "less sorted" the
+                      array is, the more steps the algorithm performs.
+                      Intuitively, we expecte the algorithm to takes the longest
+                      when the array <code>a</code>is sorted in descending
+                      order.</p>
+                      
+                    <p>The table below summarizes the paths found by GameTime in
+                      the three cases considered in this tutorial. In each of
+                      the three cases considered in this tutorial, we calculated
+                      three distinct paths. Each column in the table shows the
+                      values assigned to the array <code>a</code> which
+                      correspond to the path, out of the three predictions, that
+                      takes the longest when measured.</p>
+                      
+                    <p>Note that, the second column is far from sorted, whereas
+                      the last column is almost sorted except for
+                      <code>a[5], a[6], a[7]</code>.
+                      
+                      <table class="table" style="text-align:right">
+                        <thead>
+                          <tr>
+                            <th style="text-align:center">A</th>
+                            <th style="text-align:center">Original</th>
+                            <th style="text-align:center">
+                                Maximum Error Scale Factor = 10
+                            </th>
+                            <th style="text-align:center">
+                                Maximum Error Scale Factor = 5
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody style="text-align:right">
+                          <tr>
+                            <td>a[0]</td>
+                            <td>553648139</td>
+                            <td>-2013265919</td>
+                            <td>1083244544</td>
+                          </tr>
+                          <tr> 
+                            <td>a[1]</td>
+                            <td>1073741827</td>
+                            <td>-2130444268</td>
+                            <td>269486096</td>
+                          </tr>
+                          <tr> 
+                            <td>a[2]</td>
+                            <td>67117059</td>
+                            <td>-2126512128</td>
+                            <td>134217748</td>
+                          </tr>
+                          <tr> 
+                            <td>a[3]</td>
+                            <td>1066323</td>
+                            <td>-2147483632</td>
+                            <td>-2113929216</td>
+                          </tr>
+                          <tr> 
+                            <td>a[4]</td>
+                            <td>-2147483647</td>
+                            <td>-2147483612</td>
+                            <td>-2113929215</td>
+                          </tr>
+                          <tr> 
+                            <td>a[5]</td>
+                            <td>-2147483512</td>
+                            <td>-2147483648</td>
+                            <td>-2147483648</td>
+                          </tr>
+                          <tr> 
+                            <td>a[6]</td>
+                            <td>-2079326175</td>
+                            <td>-2147483640</td>
+                            <td>-2147475456</td>
+                          </tr>
+                          <tr> 
+                            <td>a[7]</td>
+                            <td>  -214748364</td>
+                            <td>  -2147483648</td>
+                            <td>  -2147481534</td>
+                          </tr>
+                        <tbody>
+                      </table>
+                    </p>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div id="tutorials-gui">
+            <div class="page-h1"><h1>GUI Tutorials</h1></div>
+            <div>
+              <p>The GameTime distribution provides a graphical user interface
+                (GUI) to the GameTime toolkit. It contains the shortcut to
+                an executable, available at <tt>gametime-gui</tt>, which
+                sets up several environment variables needed for
+                the functioning of GameTime. The tutorials below will use
+                this executable to instantiate the GUI.</p>
+
+              <p>For brevity, when used in the tutorials below, the phrase
+                &quot;basis (or feasible) paths&quot; of code
+                being analyzed refers to the basis (or feasible) paths in
+                the control-flow graph for that code.</p>
+
+              <div id="tutorial-gui-1">
+                <h2>Tutorial 1: Generating the Basis and Worst-Case Paths</h2>
+                <p>In this tutorial, you will explore how to use the GUI to
+                  generate the test cases that correspond to the basis paths of
+                  exemplar code. You will then use pre-obtained measurements of
+                  these test cases to generate other test cases that correspond
+                  to the five worst-case paths (or the paths with the longest
+                  predicted timings).</p>
+
+                <ol>
+                  <li id="tutorial-gui-1-step-1">
+                    <p>Run the executable <tt>gametime-gui</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a GUI to GameTime. The interface has
+                      a main window and a background window that displays
+                      a verbose log of events. For this tutorial,
+                      you will be mostly concerned with the main window,
+                      shown below:</p>
+
+                    <p>
+                      <img height="481" width="806"
+                        src="../static/img/tutorials/tutorial-gui-1-step-1-main-window.jpg" />
+                    </p>
+                  </li>
+                  <li id="tutorial-gui-1-step-2">
+                    <p>The GameTime distribution includes several sample
+                      projects within the <tt>demo/gui</tt> directory.
+                      Examine the contents of the subdirectory labeled
+                      <tt>modexp_unrolled</tt>, which constitutes the GameTime
+                      project for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>modexp_simple.c</tt>,
+                          contains an implementation of modular exponentiation,
+                          where a base (the global variable <code>base</code>)
+                          is raised to an exponent (the global variable
+                          <code>exponent</code>), modulo a large prime number.
+                          The code that will be analyzed is present
+                          in a function called <code>modexp_simple</code>.</p>
+
+                        <div class="callout callout-info">
+                          <p>The function implements the
+                            <a href="http://en.wikipedia.org/wiki/Exponentiation_by_squaring#Basic_method">
+                              <em>square-and-multiply</em> algorithm</a>,
+                            with one conditional statement for each bit of
+                            the exponent. Since there are only four conditional
+                            statements, this implementation is specific to
+                            four-bit exponents.</p>
+                        </div>
+                      </li>
+                      <li>
+                        <p>The directory <tt>simulations</tt>, which contains
+                          files that have the timings of the test cases
+                          that correspond to the basis paths of
+                          <code>modexp_simple</code>. The subdirectory
+                          <tt>ptarmsim-1.0</tt> contains the timings as
+                          measured on the
+                          <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                          PTARM simulator</a>. (To install the PTARM simulator,
+                          please refer to
+                          <a href="../getting-started/#step-3">step 3 of
+                          the installation guide</a>. However, you do
+                          <em>not</em> need to install the simulator for
+                          this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-gui-1-step-3">
+                    <p>In the GameTime GUI, select <tt>File</tt> &rarr;
+                      <tt>Open project...</tt>. Navigate to the subdirectory
+                      <tt>demo/gui/modexp_unrolled</tt> and select
+                      the file <tt>modexp_simple.c</tt>. You may need
+                      to adjust the filter of the file picker to
+                      <tt>C files (*.c)</tt> to find and select the file.
+                      The following dialog box will pop up:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-3-project-configuration.jpg" />
+                    </p>
+
+                    <p>The dialog box contains many fields that allow you to
+                      configure a GameTime project. In particular,
+                      the following fields are relevant for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p><tt>Location of C file</tt>: The absolute location of
+                          the file that contains the code to be analyzed.
+                          This should be prepopulated with the absolute
+                          location of the file (<tt>modexp_simple.c</tt>)
+                          that was chosen in the file picker.</p>
+                      </li>
+                      <li>
+                        <p><tt>Function to analyze</tt>:
+                          The name of the function that is to be analyzed.
+                          Since the code in the function
+                          <code>modexp_simple</code> is to be analyzed,
+                          set this field to <code>modexp_simple</code>.</p>
+                      </li>
+                      <li>
+                        <p><tt>ILP solver</tt>: The name of the ILP solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to
+                          <code>glpk</code>, which indicates that
+                          the ILP solver from GLPK will be used.</p>
+                      </li>
+                      <li>
+                        <p><tt>SMT solver</tt>: The name of the SMT solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to <code>z3</code>,
+                          which indicates that Z3, the SMT solver
+                          from Microsoft, will be used. If you would like
+                          GameTime to use Boolector instead, set this
+                          to <code>boolector</code> (or any of the variants,
+                          whose suffixes are named after the SAT solver used
+                          by Boolector).</p>
+                      </li>
+                    </ul>
+
+                    <p>Click <tt>OK</tt>. An entry for the file
+                      <tt>modexp_simple.c</tt> should be present in
+                      the leftmost window. Also, the code from the file
+                      should be loaded into the middle window, as shown
+                      below:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-1-step-3-main-window.jpg" />
+                    </p>
+                  </li>
+                  <li id="tutorial-gui-1-step-4">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate basis paths</tt>. This will generate
+                      the test cases that correspond to
+                      the basis paths of the code in
+                      <code>modexp_simple</code>. The <tt>Console</tt>,
+                      located in the bottom window, should display
+                      <tt>Generating basis paths...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the basis
+                      paths are generated.</p>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>Basis paths have been generated.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-4-paths-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-1-step-5">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated basis paths.
+                      Double-click any one of these entries to highlight
+                      the statements executed along each path. For example,
+                      the image below shows the contents of the main window
+                      when you double-click the entry
+                      <tt>modexp_simple.c + Basis Path 2</tt>:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-1-step-5-main-window.jpg" />
+                    </p>
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the second
+                      basis path. The rightmost window shows the test case
+                      that corresponds to this basis path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Each test case that corresponds to each basis
+                        path is an assignment to the global variables in
+                        <code>modexp_simple</code>. For this tutorial,
+                        each test case assigns a value to the global
+                        variable <code>exponent</code>. Each test case
+                        will drive the execution of the function along
+                        a basis path.</p>
+                    </div>
+
+                    <p>You may notice that the code displayed in the middle
+                      window is different from the original code. This is
+                      because GameTime uses
+                      <a href="http://kerneis.github.io/cil/">CIL</a>
+                      to preprocess the source code before analysis.
+                      You can examine this preprocessed code by double-clicking
+                      on the entry <tt>modexp_simple.c (Preprocessed)</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-1-step-6">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>modexp_simple</code> and
+                      the corresponding test cases, you can measure these
+                      test cases on the platform of your choice. For this
+                      tutorial, however, you can use the timing measurements
+                      already collected on the PTARM simulator,
+                      as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>z3-glpk</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.
+                      (If you changed the SMT solver to Boolector in
+                      <a href="#tutorial-gui-1-step-3">step 3</a>,
+                      you can use the file <tt>boolector-glpk</tt>
+                      for this step instead.)</p>
+
+                    <div class="callout callout-info">
+                      <p>In the file, lines that begin with the
+                        <code>&#35;</code> character are comments. Each of
+                        the other lines in the file has the number of
+                        a basis path and the measurement of the corresponding
+                        test case on the PTARM simulator, with the values
+                        separated by whitespace.</p>
+                    </div>
+
+                    <p>Select <tt>Edit</tt> &rarr;
+                      <tt>Enter basis values...</tt>.
+                      The following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-6-basis-values.jpg" />
+                    </p>
+
+                    <p>Click <tt>Import from file...</tt> and, using
+                      the file picker that appears, select the appropriate
+                      file that contains the timing measurements for
+                      the basis paths (either
+                      <tt>simulations/ptarmsim-1.0/z3-glpk</tt> or
+                      <tt>simulations/ptarmsim-1.0/boolector-glpk</tt>).
+                      The dialog box should now populate with these
+                      measurements. Click <tt>OK</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-1-step-7">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate worst-case feasible paths</tt>.
+                      In the dialog box that appears, enter <tt>5</tt>:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-7-num-paths.jpg" />
+                    </p>
+
+                    <p>This will generate the test cases that correspond to
+                      the five worst-case feasible paths of the code in
+                      <code>modexp_simple</code>. The <tt>Console</tt>,
+                      located in the bottom window, should display
+                      <tt>Generating 5 worst-case feasible paths...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the worst-case
+                      feasible paths are generated.</p>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>5 worst-case feasible paths have been generated.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-7-paths-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-1-step-8">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated worst-case
+                      feasible paths. Double-click any one of these entries
+                      to highlight the statements executed along each path.
+                      For example, the image below shows the contents of
+                      the main window when you double-click the entry
+                      <tt>modexp_simple.c + Worst Path 1</tt>:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-1-step-8-main-window.jpg" />
+                    </p>
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the worst-case
+                      feasible path. The rightmost window shows the test case
+                      that corresponds to this path, and the predicted
+                      timing of this path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Notice that the test case for the predicted worst-case
+                        feasible path assigns a value of <code>0xf</code>
+                        to the global variable <code>exponent</code>.
+                        All of the four bits of <code>exponent</code> are thus
+                        set to <code>1</code>. This indicates that
+                        the worst-case feasible path occurs when all four
+                        conditional statements in the code of
+                        <code>modexp_simple</code> evaluate to true.
+                        In the test cases for the other four predicted
+                        worst-case feasible paths, exactly one bit of
+                        <code>exponent</code> is <code>0</code>, which implies
+                        that exactly one of the four conditional statements
+                        evaluates to false.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+
+              <div id="tutorial-gui-2">
+                <h2>Tutorial 2: Inlining Functions</h2>
+                <p>In this tutorial, as in the previous tutorial, you will
+                  explore how to use the GUI to generate the test cases that
+                  correspond to the basis paths of exemplar code. However,
+                  this exemplar code calls another function, which thus needs
+                  to be inlined for the GameTime analysis. You will then use
+                  pre-obtained measurements of these test cases to generate
+                  other test cases that correspond to the five best-case paths
+                  (or the paths with the shortest predicted timings).</p>
+
+                <ol>
+                  <li id="tutorial-gui-2-step-1">
+                    <p>Run the executable <tt>gametime-gui</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a GUI to GameTime. The interface has
+                      a main window and a background window that displays
+                      a verbose log of events. For this tutorial,
+                      you will be mostly concerned with the main window.</p>
+                  </li>
+                  <li id="tutorial-gui-2-step-2">
+                    <p>Within the <tt>demo/gui</tt> directory, examine
+                      the contents of the subdirectory labeled
+                      <tt>speed</tt>, which constitutes the GameTime
+                      project for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>speed.c</tt>, contains code that
+                          calculates the final (one-dimensional) speed of
+                          an object with an initial speed (the global
+                          variable <code>initial_speed</code>) and constant
+                          acceleration (the global variable <code>acc</code>),
+                          after a certain amount of time (the global variable
+                          <code>time</code>). However, the final speed cannot
+                          exceed a certain predefined limit (the constant
+                          <code>LIMIT</code>, which here is assigned to
+                          <code>100</code>). The code that will be analyzed is
+                          present in a function called
+                          <code>calculate_final_speed</code>. To ensure that
+                          the final speed does not exceed the limit,
+                          the function <code>saturate</code> is used: this
+                          is the function that needs to be inlined.</p>
+                      </li>
+                      <li>
+                        <p>The directory <tt>simulations</tt>, which contains
+                          files that have the timings of the test cases
+                          that correspond to the basis paths of
+                          <code>calculate_final_speed</code>, after
+                          the function <code>saturate</code> has been inlined.
+                          The subdirectory <tt>ptarmsim-1.0</tt> contains
+                          the timings as measured on the
+                          <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                          PTARM simulator</a>. (To install the PTARM simulator,
+                          please refer to
+                          <a href="../getting-started/#step-3">step 3 of
+                          the installation guide</a>. However, you do
+                          <em>not</em> need to install the simulator for
+                          this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-gui-2-step-3">
+                    <p>In the GameTime GUI, select <tt>File</tt> &rarr;
+                      <tt>Open project...</tt>. Navigate to the subdirectory
+                      <tt>demo/gui/speed</tt> and select the file
+                      <tt>speed.c</tt>. You may need to adjust the filter of
+                      the file picker to <tt>C files (*.c)</tt> to find and
+                      select the file. The following dialog box will pop up:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-2-step-3-project-configuration.jpg" />
+                    </p>
+
+                    <p>The dialog box contains many fields that allow you to
+                      configure a GameTime project. In particular,
+                      the following fields are relevant for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p><tt>Location of C file</tt>: The absolute location of
+                          the file that contains the code to be analyzed.
+                          This should be prepopulated with the absolute
+                          location of the file (<tt>speed.c</tt>)
+                          that was chosen in the file picker.</p>
+                      </li>
+                      <li>
+                        <p><tt>Function to analyze</tt>:
+                          The name of the function that is to be analyzed.
+                          Since the code in the function
+                          <code>calculate_final_speed</code> is to be
+                          analyzed, set this field to
+                          <code>calculate_final_spped</code>.</p>
+                      </li>
+                      <li>
+                        <p><tt>Names of functions to inline</tt>: The names of
+                          the functions that need to be inlined. The value of
+                          this field should be <code>saturate</code>, which is
+                          the name of the function that needs to be inlined into
+                          the function that is to be analyzed:
+                          <code>calculate_final_speed</code>.</p>
+                      </li>
+                      <li>
+                        <p><tt>ILP solver</tt>: The name of the ILP solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to
+                          <code>glpk</code>, which indicates that
+                          the ILP solver from GLPK will be used.</p>
+                      </li>
+                      <li>
+                        <p><tt>SMT solver</tt>: The name of the SMT solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to <code>z3</code>,
+                          which indicates that Z3, the SMT solver
+                          from Microsoft, will be used. If you would like
+                          GameTime to use Boolector instead, set this
+                          to <code>boolector</code> (or any of the variants,
+                          whose suffixes are named after the SAT solver used
+                          by Boolector).</p>
+                      </li>
+                    </ul>
+
+                    <p>Click <tt>OK</tt>. An entry for the file
+                      <tt>speed.c</tt> should be present in
+                      the leftmost window. Also, the code from the file
+                      should be loaded into the middle window, as shown
+                      below:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-2-step-3-main-window.jpg" />
+                    </p>
+                  </li>
+                  <li id="tutorial-gui-2-step-4">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate basis paths</tt>. This will generate
+                      the test cases that correspond to
+                      the basis paths of the code in
+                      <code>calculate_final_speed</code>, after inlining
+                      the function <code>saturate</code>. The <tt>Console</tt>,
+                      located in the bottom window, should display
+                      <tt>Generating basis paths...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the basis
+                      paths are generated.</p>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>Basis paths have been generated.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-4-paths-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-2-step-5">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated basis paths.
+                      Double-click any one of these entries to highlight
+                      the statements executed along each path. For example,
+                      the image below shows the contents of the main window
+                      when you double-click the entry
+                      <tt>speed.c + Basis Path 2</tt>:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-2-step-5-main-window.jpg" />
+                    </p>
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the second
+                      basis path. The rightmost window shows the test case
+                      that corresponds to this basis path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Each test case that corresponds to each basis
+                        path is an assignment to the global variables in
+                        <code>calculate_final_speed</code>. Each test case
+                        will drive the execution of the function along
+                        a basis path.</p>
+                    </div>
+
+                    <p>You may notice that the code displayed in the middle
+                      window is different from the original code. This is
+                      because GameTime uses
+                      <a href="http://kerneis.github.io/cil/">CIL</a>
+                      to preprocess the source code before analysis.
+                      You can examine this preprocessed code by double-clicking
+                      on the entry <tt>speed.c (Preprocessed)</tt>:
+                      the middle window shows the code of the function
+                      <code>calculate_final_speed</code>, with the code in
+                      the function <code>saturate</code> inlined.</p>
+                  </li>
+                  <li id="tutorial-gui-2-step-6">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>calculate_final_speed</code>
+                      (with the code in <code>saturate</code> inlined) and
+                      the corresponding test cases, you can measure these
+                      test cases on the platform of your choice. For this
+                      tutorial, however, you can use the timing measurements
+                      already collected on the PTARM simulator,
+                      as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>z3-glpk</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.
+                      (If you changed the SMT solver to Boolector in
+                      <a href="#tutorial-gui-2-step-3">step 3</a>,
+                      you can use the file <tt>boolector-glpk</tt>
+                      for this step instead.) These files are further
+                      described in <a href="#tutorial-gui-1-step-6">step 6 of
+                      tutorial 1</a>.</p>
+
+                    <p>Select <tt>Edit</tt> &rarr;
+                      <tt>Enter basis values...</tt>.
+                      The following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-2-step-6-basis-values.jpg" />
+                    </p>
+
+                    <p>Click <tt>Import from file...</tt> and, using
+                      the file picker that appears, select the appropriate
+                      file that contains the timing measurements for
+                      the basis paths (either
+                      <tt>simulations/ptarmsim-1.0/z3-glpk</tt> or
+                      <tt>simulations/ptarmsim-1.0/boolector-glpk</tt>).
+                      The dialog box should now populate with these
+                      measurements. Click <tt>OK</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-2-step-7">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate best-case feasible paths</tt>.
+                      In the dialog box that appears, enter <tt>3</tt>:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-2-step-7-num-paths.jpg" />
+                    </p>
+
+                    <p>This will generate the test cases that correspond to
+                      the three best-case feasible paths of the code in
+                      <code>calculate_final_speed</code> (with the code in
+                      <code>saturate</code> inlined). The <tt>Console</tt>,
+                      located in the bottom window, should display
+                      <tt>Generating 3 best-case feasible paths...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the best-case
+                      feasible paths are generated.</p>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>3 best-case feasible paths have been generated.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-2-step-7-paths-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-2-step-8">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated best-case
+                      feasible paths. Double-click any one of these entries
+                      to highlight the statements executed along each path.
+                      For example, the image below shows the contents of
+                      the main window when you double-click the entry
+                      <tt>speed.c + Best Path 1</tt>:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-2-step-8-main-window.jpg" />
+                    </p>
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the best-case
+                      feasible path. The rightmost window shows the test case
+                      that corresponds to this path, and the predicted
+                      timing of this path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Notice that the test case for the predicted best-case
+                        feasible path sets both the acceleration
+                        (<code>acc</code>) and the time (<code>time</code>)
+                        to zero, and sets the initial speed
+                        (<code>initial_speed</code>) to <code>0x65</code>.
+                        These values produce a final speed (<code>0x65</code>)
+                        that satisfies the first condition of the only
+                        <code>if</code>-statement in the function
+                        <code>saturate</code>: <code>value > LIMIT</code>,
+                        where <code>LIMIT</code> is <code>100</code>
+                        (or <code>0x64</code>).</p>
+
+                      <p>The test case for the next feasible path sets
+                        the global variables to values that produce a final
+                        speed. This speed does not satisfy the first condition
+                        of the <code>if</code>-statement, but satisfies
+                        the second condition. The execution of this feasible
+                        path thus needs two conditions to be evaluated, which
+                        results in a slightly longer timing for the path.
+                        Similarly, the execution of the third feasible path
+                        results in the evaluation of all three conditions,
+                        which results in the longest timing among the three
+                        predicted best-case feasible paths.</p>
+
+                      <p>The three feasible paths produced also correspond to
+                        the only three feasible paths through the function
+                        <code>calculate_final_speed</code>, after the function
+                        <code>saturate</code> has been inlined.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+
+              <div id="tutorial-gui-3">
+                <h2>Tutorial 3: Unrolling Loops</h2>
+                <p>In this tutorial, as in the previous two, you will explore
+                  how to use the GUI to generate the test cases that correspond
+                  to the basis paths of exemplar code. This code performs
+                  modular exponentiation, as the exemplar code from
+                  <a href="#tutorial-gui-1">tutorial 1</a> does, but employs
+                  a <code>for</code>-loop to loop through the bits of
+                  the exponent. This loop needs to be unrolled for the GameTime
+                  analysis. You will then use pre-obtained measurements of
+                  the generated test cases to generate the test cases that
+                  correspond to all of the feasible paths.</p>
+
+                <ol>
+                  <li id="tutorial-gui-3-step-1">
+                    <p>Run the executable <tt>gametime-gui</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a GUI to GameTime. The interface has
+                      a main window and a background window that displays
+                      a verbose log of events. For this tutorial,
+                      you will be mostly concerned with the main window.</p>
+                  </li>
+                  <li id="tutorial-gui-3-step-2">
+                    <p>Within the <tt>demo/gui</tt> directory, examine
+                      the contents of the subdirectory labeled
+                      <tt>modexp</tt>, which constitutes the GameTime project
+                      for this tutorial, and which should be similar to
+                      <a href="#tutorial-gui-1-step-2">those in
+                      tutorial 1</a>:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>modexp_simple.c</tt>,
+                          contains an implementation of modular exponentiation,
+                          where a base (the global variable <code>base</code>)
+                          is raised to an exponent (the global variable
+                          <code>exponent</code>), modulo a large prime number.
+                          The code that will be analyzed is present
+                          in a function called <code>modexp_simple</code>.
+                          Notice that, unlike the code in tutorial 1,
+                          this implementation uses a <code>for</code>-loop.</p>
+                      </li>
+                      <li>
+                        <p>The directory <tt>simulations</tt>, which contains
+                          files that have the timings of the test cases
+                          that correspond to the basis paths of
+                          <code>calculate_final_speed</code>, after
+                          the function <code>saturate</code> has been inlined.
+                          The subdirectory <tt>ptarmsim-1.0</tt> contains
+                          the timings as measured on the
+                          <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                          PTARM simulator</a>. (To install the PTARM simulator,
+                          please refer to
+                          <a href="../getting-started/#step-3">step 3 of
+                          the installation guide</a>. However, you do
+                          <em>not</em> need to install the simulator for
+                          this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-gui-3-step-3">
+                    <p>In the GameTime GUI, select <tt>File</tt> &rarr;
+                      <tt>Open project...</tt>. Navigate to the subdirectory
+                      <tt>demo/gui/modexp</tt> and select the file
+                      <tt>modexp_simple.c</tt>. You may need to adjust
+                      the filter of the file picker to <tt>C files (*.c)</tt>
+                      to find and select the file. The following dialog box
+                      will pop up:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-3-step-3-project-configuration.jpg" />
+                    </p>
+
+                    <p>The dialog box contains many fields that allow you to
+                      configure a GameTime project. In particular,
+                      the following fields are relevant for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p><tt>Location of C file</tt>: The absolute location of
+                          the file that contains the code to be analyzed.
+                          This should be prepopulated with the absolute
+                          location of the file (<tt>modexp.c</tt>)
+                          that was chosen in the file picker.</p>
+                      </li>
+                      <li>
+                        <p><tt>Function to analyze</tt>:
+                          The name of the function that is to be analyzed.
+                          Since the code in the function
+                          <code>modexp_simple</code> is to be
+                          analyzed, set this field to
+                          <code>modexp_simple</code>.</p>
+                      </li>
+                      <li>
+                        <p><tt>ILP solver</tt>: The name of the ILP solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to
+                          <code>glpk</code>, which indicates that
+                          the ILP solver from GLPK will be used.</p>
+                      </li>
+                      <li>
+                        <p><tt>SMT solver</tt>: The name of the SMT solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to <code>z3</code>,
+                          which indicates that Z3, the SMT solver
+                          from Microsoft, will be used. If you would like
+                          GameTime to use Boolector instead, set this
+                          to <code>boolector</code> (or any of the variants,
+                          whose suffixes are named after the SAT solver used
+                          by Boolector).</p>
+                      </li>
+                    </ul>
+
+                    <p>Click <tt>OK</tt>. An entry for the file
+                      <tt>modexp.c</tt> should be present in
+                      the leftmost window. Also, the code from the file
+                      should be loaded into the middle window, as shown
+                      below:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-3-step-3-main-window.jpg" />
+                    </p>
+                  </li>
+                  <li id="tutorial-gui-3-step-4">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate basis paths</tt>. As in
+                      <a href="#tutorial=gui-1-step-4">step 4 of tutorial 1</a>,
+                      this will generate the test cases that correspond to
+                      the basis paths of the code in
+                      <code>modexp_simple</code>. The <tt>Console</tt>,
+                      located in the bottom window, should display
+                      <tt>Generating basis paths...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the basis
+                      paths are generated.</p>
+
+                    <p>However, this time, GameTime ends its analysis with
+                      a notification that the loops in the code have been
+                      detected:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-3-step-4-loops-detected.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt>. Another dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-3-step-4-loop-bounds.jpg" />
+                    </p>
+
+                    <p>Replace <code>1</code> with <code>4</code> and
+                      click OK.</p>
+
+                    <div class="callout callout-info">
+                      <p>The dialog box informs the user of the locations of
+                       the loops within the file that is analyzed by GameTime,
+                       and allows the user to direct GameTime to unroll
+                       each loop a certain number of times.</p>
+
+                      <p>In the dialog box, each line contains three items:
+                        the name of the file that is analyzed by GameTime and
+                        contains loops (<code>modexp_simple-gt.c</code>),
+                        the line number of the header of the loop
+                        (<code>24</code>), and the number of times this loop
+                        should be unrolled (with a default value of
+                        <code>1</code>).</p>
+
+                      <p>Note that, as seen in the dialog box, the file that is
+                        analyzed by GameTime is not the original file, but
+                        a copy of the file made by GameTime for the purposes of
+                        its analysis. This copy is stored within the temporary
+                        directory created by GameTime
+                        (<tt>modexp_simple-gt</tt>) in the same directory
+                        as the file that contains the code being analyzed.</p>
+
+                      <p>Also note that, when the third item of the first line
+                        is edited from <code>1</code> to <code>4</code>,
+                        the only loop in the code, whose header is at line 24,
+                        will be unrolled four times. This should result in
+                        code that is functionally equivalent to the code in
+                        tutorial 1, which performed modular exponentiation with
+                        four-bit exponents.</p>
+                    </div>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>Basis paths have been generated.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-1-step-4-paths-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-3-step-5">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated basis paths.
+                      Double-click any one of these entries to highlight
+                      the statements executed along each path. For example,
+                      the image below shows the contents of the main window
+                      when you double-click the entry
+                      <tt>modexp.c + Basis Path 2</tt>:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-3-step-5-main-window.jpg" />
+                    </p>
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the second
+                      basis path. The rightmost window shows the test case
+                      that corresponds to this basis path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Each test case that corresponds to each basis
+                        path is an assignment to the global variables in
+                        <code>modexp_simple</code>. For this tutorial, as in
+                        <a href="#tutorial-gui-1-step-5">step 5 of tutorial
+                        1</a>, each test case assigns a value to the global
+                        variable <code>exponent</code>. Each test case will
+                        drive the execution of the function along a basis
+                        path.</p>
+                    </div>
+
+                    <p>You may notice that the code displayed in the middle
+                      window is different from the original code. This is
+                      because GameTime uses
+                      <a href="http://kerneis.github.io/cil/">CIL</a>
+                      to preprocess the source code before analysis.
+                      You can examine this preprocessed code by double-clicking
+                      on the entry <tt>modexp_simple.c (Preprocessed)</tt>:
+                      the middle window shows the code of the function
+                      <code>modexp_simple</code>, with the only loop in
+                      the function unrolled four times.</p>
+                  </li>
+                  <li id="tutorial-gui-3-step-6">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>modexp_simple</code> (after
+                      its loop has been unrolled) and the corresponding
+                      test cases, you can measure these test cases on
+                      the platform of your choice. For this tutorial,
+                      however, you can use the timing measurements
+                      already collected on the PTARM simulator,
+                      as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>z3-glpk</tt> contains the timing
+                      measurements for the basis paths obtained in this
+                      tutorial. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.
+                      (If you changed the SMT solver to Boolector in
+                      <a href="#tutorial-gui-3-step-3">step 3</a>,
+                      you can use the file <tt>boolector-glpk</tt>
+                      for this step instead.) These files are further
+                      described in <a href="#tutorial-gui-1-step-6">step 6 of
+                      tutorial 1</a>.</p>
+
+                    <p>Select <tt>Edit</tt> &rarr;
+                      <tt>Enter basis values...</tt>.
+                      The following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-3-step-6-basis-values.jpg" />
+                    </p>
+
+                    <p>Click <tt>Import from file...</tt> and, using
+                      the file picker that appears, select the appropriate
+                      file that contains the timing measurements for
+                      the basis paths (either
+                      <tt>simulations/ptarmsim-1.0/z3-glpk</tt> or
+                      <tt>simulations/ptarmsim-1.0/boolector-glpk</tt>).
+                      The dialog box should now populate with these
+                      measurements. Click <tt>OK</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-3-step-7">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate all feasible paths (decreasing order)</tt>.
+                      Click OK to dismiss the resulting warning:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-3-step-7-warning.jpg" />
+                    </p>
+
+                    <p>This will generate the test cases that correspond to
+                      all (sixteen) of the feasible paths of the code in
+                      <code>modexp_simple</code> (after its loop has been
+                      unrolled), in <em>decreasing</em> order of their
+                      predicted timings. The <tt>Console</tt>, located in
+                      the bottom window, should display <tt>Generating all
+                      feasible paths in decreasing order of value...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the best-case
+                      feasible paths are generated.</p>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>All feasible paths have been generated in
+                      decreasing order of value.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-3-step-7-paths-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-3-step-8">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated feasible paths,
+                      arranged in decreasing order of predicted timings:
+                      the first feasible path is the (predicted) worst-case
+                      feasible path, while the last feasible path is
+                      the (predicted) best-case feasible path.</p>
+
+                    <p>Double-click any one of these entries to highlight
+                      the statements executed along each path.
+                      For example, the image below shows the contents of
+                      the main window when you double-click the entry
+                      <tt>modexp_simple.c + Path 1</tt>:</p>
+
+                    <p>
+                      <img height="351" width="806"
+                        src="../static/img/tutorials/tutorial-gui-3-step-8-main-window.jpg" />
+                    </p>
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the worst-case
+                      feasible path. The rightmost window shows the test case
+                      that corresponds to this path, and the predicted
+                      timing of this path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Notice that the test case for the predicted worst-case
+                        feasible path assigns a value of <code>0xf</code>
+                        to the global variable <code>exponent</code>.
+                        All of the four bits of <code>exponent</code> are thus
+                        set to <code>1</code>. This indicates that
+                        the worst-case feasible path occurs when all four
+                        conditional statements in the code of
+                        <code>modexp_simple</code> evaluate to true.
+                        Also notice that the test case for the predicted
+                        best-case feasible path assigns a value of
+                        <code>0x0</code> to the global variable
+                        <code>exponent</code>, which implies that all
+                        four conditional statements evaluate to false.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+          
+              <div id="tutorial-gui-4">
+                <h2>Tutorial 4: Overcomplete Basis</h2>
+                <p>In this tutorial, we explore how to use GameTime GUI to
+                  obtain more accurate estimates on the length of the longest
+                  path by generating (and measuring) more basis paths than the
+                  minimum number necessary (as described in
+                  <a href="http://arxiv.org/abs/1506.05893">this paper</a>). We
+                  will analyze a sample implementation of the
+                  <a href="https://en.wikipedia.org/wiki/Insertion_sort">
+                  insertion-sort algorithm</a> sorting an array of a fixed size.
+                </p>
+
+                <ol>
+                  <li id="tutorial-gui-4-step-1">
+                    <p>Run the executable <tt>gametime-gui</tt> located
+                      in the root directory of the GameTime distribution.
+                      This launches a GUI to GameTime. The interface has
+                      a main window and a background window that displays
+                      a verbose log of events. For this tutorial,
+                      you will be mostly concerned with the main window.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-2">
+                    <p>Within the <tt>demo/gui</tt> directory, examine
+                      the contents of the subdirectory labeled
+                      <tt>insertion_sort</tt>, which constitutes the GameTime
+                      project for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p>The C file, <tt>insertion_sort.c</tt>,
+                          contains an implementation of the insertion-sort
+                          algorithm which sorts the global array of integers:
+                          <code>a</code>. We will analyze the code in the
+                          function <code>insertion_sort</code>. The constant
+                          <code>LENGTH</code> specifies the size of the array
+                          <code>a</code>. To keep the generated intermediate
+                          results small and the analysis fast, we use
+                          <code>LENGTH = 8</code> in the tutorial.</p>
+                      </li>
+                      <li>
+                      <p>In the tutorial, we will first run GameTime using the
+                        same approach as in the previous tutorials. Then we run
+                        GameTime with different algorithm for two different
+                        values of <code>Maximum Error Scale Factor</code>. The
+                        subdirectory <tt>simulations/ptarmsim-1.0</tt>, contains
+                        timings of basis paths obtained using the
+                        <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                        PTARM simulator</a> for the three cases: 
+                        <tt>original-glpk-z3, error-10-glpk-z3,
+                        error-5-glpk-z3</tt>. (To install the PTARM simulator, 
+                        please refer to <a href="../getting-started/#step-3">
+                        step 3 of the installation guide</a>. However, you do
+                        <em>not</em> need to install the simulator for
+                        this tutorial.)</p>
+                      </li>
+                    </ul>
+                  </li>
+                  <li id="tutorial-gui-4-step-3">
+                    <p>In the GameTime GUI, select <tt>File</tt> &rarr;
+                      <tt>Open project...</tt>. Navigate to the subdirectory
+                      <tt>demo/gui/insertion_sort</tt> and select the file
+                      <tt>insertion_sort.c</tt>. You may need to adjust
+                      the filter of the file picker to <tt>C files (*.c)</tt>
+                      to find and select the file. A dialog appears. As
+                      described in the next paragraph, set the fields to
+                      the values shown in the picture:</p>
+
+                    <p>
+                      <img 
+                        src="../static/img/tutorials/tutorial-gui-4-step-3-load-project.jpg" />
+                    </p>
+
+                    <p>Specifically, the dialog box contains many fields that
+                      allow you to configure a GameTime project. The following
+                      fields are relevant for this tutorial:</p>
+                    <ul>
+                      <li>
+                        <p><tt>Location of C file</tt>: The absolute location of
+                          the file that contains the code to be analyzed.
+                          This should be prepopulated with the absolute
+                          location of the file (<tt>insertion_sort.c</tt>)
+                          that was chosen in the file picker.</p>
+                      </li>
+                      <li>
+                        <p><tt>Function to analyze</tt>:
+                          The name of the function that is to be analyzed.
+                          Since the code in the function
+                          <code>insertion_sort.c</code> is to be
+                          analyzed, set this field to
+                          <code>insertion_sort</code>.</p>
+                      </li>
+                      <li>
+                        <p><tt>ILP solver</tt>: The name of the ILP solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to
+                          <code>glpk</code>, which indicates that
+                          the ILP solver from GLPK will be used.</p>
+                      </li>
+                      <li>
+                        <p><tt>SMT solver</tt>: The name of the SMT solver
+                          that will be used by GameTime for its analysis.
+                          For this tutorial, set this field to <code>z3</code>,
+                          which indicates that Z3, the SMT solver
+                          from Microsoft, will be used. If you would like
+                          GameTime to use Boolector instead, set this
+                          to <code>boolector</code> (or any of the variants,
+                          whose suffixes are named after the SAT solver used
+                          by Boolector).</p>
+                      </li>
+                    </ul>
+
+                    <p>Click <tt>OK</tt>. An entry for the file
+                      <tt>insertion_sort.c</tt> should be present in
+                      the leftmost window. Also, the code from the file
+                      should be loaded into the middle window, as shown
+                      below:</p>
+
+                    <p>
+                      <img height="481" width="806"
+                        src="../static/img/tutorials/tutorial-gui-4-step-4-main-window.jpg" />
+                    </p>
+                  </li>
+                  <li id="tutorial-gui-4-step-4">
+                    <p>Select <tt>Run</tt> &rarr;
+                      <tt>Generate basis paths</tt> and approve the dialog that
+                      appers.</p>
+
+                    <p>
+                      <img src="../static/img/tutorials/tutorial-gui-4-step-4-basis-type.jpg">
+                    </p>As in
+                      <a href="#tutorial=gui-1-step-4">step 4 of tutorial 1</a>,
+                      this will generate the test cases that correspond to
+                      the basis paths of the code in
+                      <code>insertion_sort</code>. The <tt>Console</tt>,
+                      located in the bottom window, should display
+                      <tt>Generating basis paths...</tt>.
+                      Simultaneously, the background window displays
+                      a verbose log of events that occur as the basis
+                      paths are generated.</p>
+
+                    <p>However, this time, GameTime ends its analysis with
+                      a notification that the loops in the code have been
+                      detected:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-4-loops-detected.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt>. Another dialog box will appear, where
+                      we specify how many times the loops are unrolled. We
+                      proceed analogously to <a href="tutorial-gui-3-step-4">
+                      step 4, tutorial 3</a>: </p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-4-loop-bounds.jpg" />
+                    </p>
+
+                    <p>Write <code>4</code> in the first field and
+                      <code>7</code> in the second field. Then click OK.</p>
+
+                    <div class="callout callout-info">
+                      <p>The dialog box informs the user of the locations of
+                       the loops within the file that is analyzed by GameTime,
+                       and allows the user to direct GameTime to unroll
+                       each loop a certain number of times.</p>
+
+                       <p>The first line corresponds to the loop starting at
+                         line <tt>20</tt>, which is the inner <code>while</code>
+                         loop. The second line specifies how many times the loop
+                         starting at line <tt>18</tt> should be unrolled. This
+                         corresponds to the outer<code>for</code> loop in the
+                         <tt>insertion_sort</tt> function.</p>
+                    </div>
+                    
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>Basis paths have been generated.</tt>
+                      Also, the following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-4-generated.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-5">
+                    <p>If the previous step completes successfully, the
+                      GUI should show new entries in the leftmost window,
+                      one for each of the newly generated basis paths. There
+                      should be <code>23</code> paths in total. You can
+                      double-click any one of these entries to highlight
+                      the statements executed along each path.
+
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the
+                      basis path. The rightmost window shows the test case
+                      that corresponds to this basis path.</p>
+
+                    <div class="callout callout-info">
+                      <p>Each test case that corresponds to each basis
+                        path is an assignment to the global variables in
+                        <code>insertion_sort</code>. Each test case will
+                        drive the execution of the function along a basis
+                        path.</p>
+                    </div>
+
+                    <p>You may notice that the code displayed in the middle
+                      window is different from the original code. This is
+                      because GameTime uses
+                      <a href="http://kerneis.github.io/cil/">CIL</a>
+                      to preprocess the source code before analysis.
+                      You can examine this preprocessed code by double-clicking
+                      on the entry <tt>insertion_sort.c (Preprocessed)</tt>:
+                      the middle window shows the code of the function
+                      <code>insertion_sort</code>, with the loops in
+                      the function unrolled accordingly to the values provided
+                      in the previous step.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-6">
+                    <p>Now that GameTime has generated the basis paths
+                      of the code in <code>insertion_sort</code> (after
+                      its loops have been unrolled) and the corresponding
+                      test cases, you can measure these test cases on
+                      the platform of your choice. For this tutorial,
+                      however, you can use the timing measurements
+                      already collected on the PTARM simulator,
+                      as stored in the directory
+                      <tt>simulations/ptarmsim-1.0</tt>.</p>
+
+                    <p>The file <tt>original-glpk-z3</tt> contains the timing
+                      measurements for the 23 basis paths obtained in the
+                      previous steps. As the name of the file indicates, these
+                      measurements were made for the basis paths generated
+                      with Z3 as the SMT solver and GLPK as the ILP solver.</p>
+
+                    <p>Select <tt>Edit</tt> &rarr;
+                      <tt>Enter basis values...</tt>.
+                      The following dialog box will appear:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-6-before-import.jpg" />
+                    </p>
+
+                    <p>Click <tt>Import from file...</tt> and, using
+                      the file picker that appears, select the appropriate
+                      file that contains the timing measurements for
+                      the basis paths:
+                      <tt>simulations/ptarmsim-1.0/original-glpk-z3</tt></p>
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-6-after-import.jpg" />
+                    </p>
+                    <p>
+                      The dialog box should now populate with these
+                      measurements. Click <tt>OK</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-7">
+                    <p>Select <tt>Run</tt> &rarr; 
+                      <tt>Generate worst-case feasible paths</tt>.
+                      We want to generate three longest paths. Therefore, in the
+                      dialog that appears, write number <code>3</code> into the
+                      only editable text field. Click OK to proceed:</p>
+
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-7-main-dialog.jpg" />
+                    </p>
+
+                    <p>This should generate test cases that correspond to three
+                      feasible paths in <code>insertion_sort</code> of the
+                      longest predicted length (in <em>decreasing</em> order of
+                      their predicted timings.) The <tt>Console</tt>, located in
+                      the bottom window, should display <tt>Generating 3
+                      worst-case feasible paths...</tt>. Simultaneously, the
+                      background window displays a verbose log of events that
+                      occur as the paths are generated.</p>
+
+                    <p>Once done, the <tt>Console</tt> informs you that
+                      <tt>3 worst-case feasible paths have been generated in
+                      decreasing order of value.</tt> Also, the following dialog
+                      box will appear:</p>
+    
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-7-confirmation.jpg" />
+                    </p>
+
+                    <p>Click <tt>OK</tt> to dismiss the dialog box.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-8">
+                    <p>If the previous step completed successfully, the
+                      GUI should show three new entries in the leftmost window,
+                      one for each of the newly generated feasible paths,
+                      arranged in decreasing order of predicted timings:
+                      the first feasible path is the (predicted) worst-case
+                      feasible path, etc.</p>
+
+                    <p>Double-click any one of these entries to highlight
+                      the statements executed along each path.
+                    <p>
+                      <img height="481" width="806"
+                        src="../static/img/tutorials/tutorial-gui-4-step-8-selected-path.jpg" />
+                    </p>
+
+                      
+                    <p>The statements highlighted in the middle window
+                      represent the statements executed along the worst-case
+                      feasible path. The rightmost window shows the test case
+                      that corresponds to this path, and the predicted
+                      timing of this path. As of writing this tutorial, the
+                      predicted lengths of the three paths are
+                      <code>6311, 6150, 6148</code> clock cycles respectively.
+                    </p>
+
+                    <div class="callout callout-info">
+                      <p>However, these are only predictions for the number
+                        clock cycles required to execute <tt>insertion_sort</tt>
+                        with the computed inputs. Therefore, if we
+                        actually run the <tt>insertion_sort.c</tt> with the
+                        computed arguments, we expect, due to timing
+                        irregularities, the path lengths to differ.</p>
+                      
+                      <p>We have run the code in <tt>insertion-sort.c</tt> on
+                        the given test cases and measured the following lengths:
+                        <code>5766, 6045, 5605</code>. As expected, the observed
+                        lengths differ from the predicted ones. Note that, due
+                        to timing irregularities, the path that corresponded to
+                        the second longest predicted path is actually longer
+                        than the one that was predicted to be the longest.</p>
+                        
+                      <p>If you have installed a simulator, see
+                        <a href="tutorial-sandbox-step-10">step 10, tutorial 3
+                        </a> how all values computed in this tutorial and the
+                        entire analysis until this point can be obtained by a
+                        single command from the command line.</p>
+                    </div>
+                  </li>
+                  <h3>Timing Analysis using Overcomplete Basis</h3>
+                  <li id="tutorial-gui-4-step-9">
+                    <p>We now describe how to obtain more accurate predictions
+                      of paths lengths. This then allows us to find arguments on
+                      which <code>insertion_sort</code> runs longer than on any
+                      of the inputs computed in the previous steps.</p>
+                      
+                    <p>Run the <tt>Run</tt> &rarr; <tt>Generate basis paths</tt>
+                      command again. You will be notified that the basis paths
+                      generated in the previous steps will be deleted.</p>
+                      
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-9-delete.jpg" />
+                    </p>
+                    
+                    <p>Click <tt>OK</tt> to approve. On the next dialog , check
+                      the <tt>Generate overcomplete basis</tt> and in the text
+                      field below <tt>Maximum Error Scale Factor</tt> (which
+                      should now be editable), write <code>10</code>. Then click
+                      <tt>OK</tt>.</p>
+                      
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-9-error-10.jpg" />
+                    </p>
+                    
+                    <div class="callout callout-info">
+                      <p>The checkbox <code>Generate overcomplete basis</code>
+                        tells GameTime to generate more than the minimum number
+                        of basis paths necessary. The number of generated paths
+                        is determined by the desired accuracy of the algorithm
+                        as specified by the property
+                        <code>Maximum Error Scale Factor</code>. The
+                        parameter can be any real number of value at least
+                        <code>1</code>. The lower the value, the more basis
+                        paths will be generated and more accurate the predicted 
+                        lengths should be. (We use the value <code>10.0</code>
+                        in this step, but in later steps we will see the effect
+                        of using a different value.)</p>
+                    </div>
+
+                  </li>
+                  <li id="tutorial-gui-4-step-10">
+                    <p>If the command runs successfully, GameTime should
+                      generate 27 basis paths (out of total number of 15000
+                      paths in the underlying control-flow graph), which should
+                      appear in the leftmost column of the GUI </p>
+
+                    <p>As before, we provide measurements of the lengths of the
+                      basis paths as obtained by the Ptarmsim simulator. The
+                      measurements are loaded as in the previous steps: click on
+                      <tt>Edit</tt> &rarr; <tt>Enter basis values...</tt> and in
+                      the dialog click on <tt>Import from file</tt> option.
+                      Choose the file <tt>simulations/ptarmsim-1.0/error-10-glpk-z3</tt>.
+                    </p>
+
+                    <p>Once the file has been selected, the lengths of the basis
+                      paths are populated from the file. Click <tt>OK</tt>.</p>
+                      
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-10-imported.jpg" />
+                    </p> 
+                  </li>
+                  <li id="tutorial-gui-step-11">
+                    <p>As in <a href="#tutorial-gui-4-step-7">step 7</a> of this
+                      tutorial, we generate three longest paths. From the menu,
+                      select <tt>Run</tt> &rarr;
+                      <tt>Generate Worst-Case Feasible Paths...</tt>. A dialog
+                      appears and write <code>3</code> in the only field in the
+                      dialog to direct GameTime to find three paths.</p>
+                      
+                    <p>
+                      <img
+                        src="../static/img/tutorials/tutorial-gui-4-step-11-generate.jpg" />
+                    </p>
+                    
+                    <div class="callout callout-info">
+                      <p>Note the text under the only field in the dialog. It
+                        informs us that an overcomplate basis is being used and
+                        that GameTime is going to use a special algorithm that
+                        can make use of additional basis paths.</p>
+                    </div>
+                  
+                    <p>Click <tt>OK</tt> and wait while GameTime generates
+                      predictions.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-12">
+                    <p>After a few moments a dialog informing us of the end of
+                      the analysis appears. If the command finished succesfully,
+                      three more paths should appear in the list in the leftmost
+                      column. You can inspect them by double clicking on them.
+                    </p>
+                  
+                    <p>With each path, GameTime provides a predicted length of
+                      the path. The version of GameTime as of writing this
+                      tutorial generated the predictions of lengths
+                      <code>6078, 6064, 6007</code>, respectively. Note that
+                      these values are smaller than the ones in
+                      <a href="#tutorial-gui-4-step-8">step 8</a>.</p>
+                    
+                    <p>
+                      <img height="481" width="806"
+                        src="../static/img/tutorials/tutorial-gui-4-step-12-second-path.jpg" />
+                    </p>
+                    
+                    <p>If you have a simulator installed, you can measure the
+                      actual path lengths for the corresponding inputs. In this
+                      case, the actual measured lengths turn out to be
+                      <code>5826, 6266, 5385</code>. Note that not only are the
+                      measured values closer to the predicted values, they are
+                      also larger than the measured values in
+                      <a href="#tutorial-gui-4-step-8">step 8</a> above.</p>
+                    
+                    <p>Furthermore, if the predictions are generated using an
+                      overcomplete-basis extraction then it is possible to
+                      bound the difference between the predicted and measured
+                      path lengths, as described in 
+                      <a href="#tutorial-sandbox-4-step-13-box">
+                          the box in step 13 in the fourth command-line tutorial.
+                      </a></p>
+                  </li>
+                  <li id="tutorial-gui-4-step-13">
+                    <p>In the remaining steps, we tell GameTime to generate even
+                    more accurate predictions.</p>
+                    
+                    <p>As before, click on <tt>Run</tt> &rarr;
+                      <tt>Generate basis paths...</tt>. First confirm that you
+                      wish to delete all generated paths. Then in the dialog
+                      that appears, check <tt>Generate overcomplete basis</tt>
+                      and write <code>5.0</code> into the text field. Click
+                      <tt>OK</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-14">
+                    <p>Note that the more accurate an estimate is required the
+                      longer the basis generation takes. On our machine, the
+                      command took about 11 minutes to complete. You can check
+                      that GameTime is computing the basis by observing the
+                      background window where GameTime constantly outputs
+                      information about computation. If the computation finishes
+                      without any errors there should be a basis of size
+                      <code>48</code>; the paths appearing in the leftmost
+                      column.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-15">
+                    <p>We provide measurements of the lengths of the basis paths
+                      in this situation as well. Load the measurement length of
+                      the basis paths: Click on <tt>Edit</tt> &rarr;
+                      <tt>Enter basis values</tt>, in the dialog import basis
+                      lengths from file <tt>simulations/ptarmsim-1.0/error-5-glpk-z3</tt>
+                      and click <tt>OK</tt>.</p>
+                  </li>
+                  <li id="tutorial-gui-4-step-16">
+                    <p>Finally, we generate predictions. Click on <tt>Run</tt>
+                      &rarr; <tt>Generate worst-case feasible paths</tt>. In the
+                      text field write <code>3</code> specifying that we want
+                      GameTime to generate three predictions. Then click
+                      <tt>OK</tt>.</p>
+                   
+                    <p>Wait a few momements while GameTime generate predictions.
+                      If the command finishes sucessfully, the lengths of the
+                      three predicted longest paths should be:
+                      <code>6110, 6105, 6059</code>.</p>
+                   
+                    <p>
+                      <img height="481" width="806"
+                        src="../static/img/tutorials/tutorial-gui-4-step-16-third-path.jpg" />
+                    </p>
+                    
+                    <p>When measured, the actual lengths are
+                      <code>6288, 5603, 6427</code>. Note that, not only the
+                      predictions are close to the measurements but using a
+                      larger basis, we were able to generate longer paths than
+                      in any of the previous instances.</p>
+                      
+                    <div class="callout callout-info">
+                      <p>Generating larger overcomplete basis yields, in
+                        general, better predictions. However, with better
+                        predictions comes bigger complexity. Be aware that as
+                        the basis gets bigger, the algorithm gets necessarily
+                        slower. </p>
+                      
+                      <p>In the extreme case of setting
+                        <code>maximum-error-scale-factor</code> to
+                        <code>1</code>, one can
+                        <a href="http://arxiv.org/abs/1506.05893">prove</a> that
+                        all feasbile paths need to be taken as the basis paths.
+                        Thus, GameTime exhaustively explores all paths in that
+                        case.</p>
+                    </div>  
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- container -->
+
+      <hr/>
+
+      <div id="footer" class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p class="text-center">Website designed with, and inspired by,
+            <a href="http://getbootstrap.com/">Bootstrap</a> |
+            <a href="http://bootswatch.com/cosmo/">Cosmo</a>
+            theme from <a href="http://bootswatch.com/">Bootswatch</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- This code that loads JavaScript files is placed at the end of
+      the document, so that the pages load faster. -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/gametime.js"></script>
+    <!-- <script src="js/google-code-prettify/prettify.js"></script> -->
+  </body>
+</html>

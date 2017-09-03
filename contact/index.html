@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameTime">
+    <meta name="author" content="">
+
+    <!-- Stylesheets -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../static/css/gametime.css" rel="stylesheet">
+    <!-- <link href="css/google-code-prettify/prettify.css"
+      rel="stylesheet"></script> -->
+
+    <title>GameTime: Toolkit for Timing Analysis of Software</title>
+  </head>
+
+  <body>
+    <div id="mainnav" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle"
+              data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../">GameTime</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../about">About</a></li>
+            <li><a href="../getting-started">Getting started</a></li>
+            <li><a href="../tutorials">Tutorials</a></li>
+            <li><a href="../documentation">Documentation</a></li>
+            <li><a href="../contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="jumbotron-hero" class="jumbotron">
+      <div class="container">
+        <h1>Get in touch.</h1>
+        <p>Contact the developers and users of GameTime.</p>
+      </div>
+    </div> <!-- jumbotron-hero -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3" id="sidenav-wrapper">
+          <div id="sidenav" role="navigation">
+            <div class="well well-sm">
+              <ul class="nav">
+                <li><a href="#developers" class="navigate">Developers</a></li>
+                <li><a href="#users" class="navigate">Users</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div id="developers">
+            <div class="page-h1"><h1>Developers</h1></div>
+            <p>To contact the developers of GameTime, please
+              fill in the form below.</p>
+            <!-- Code inspired by
+              http://cssdeck.com/labs/twitter-bootstrap-contact-form -->
+            <form role="form" class="well well-lg">
+              <div id="submission-alert" class="alert collapse col-lg-12">
+                <span id="submission-alert-text"></span>
+                <button id="submission-alert-dismiss" type="button"
+                  class="close" aria-hidden="true">&times;</button>
+              </div>
+
+              <div>
+                <div class="form-group col-lg-6">
+                  <label for="firstname">First Name</label>
+                  <input id="firstname" class="form-control" type="text"
+                    placeholder="Enter your first name."/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="lastname">Last Name</label>
+                  <input id="lastname" class="form-control" type="text"
+                    placeholder="Enter your last name."/>
+                </div>
+              </div>
+
+              <div>
+                <div class="form-group col-lg-6">
+                  <label for="emailaddress">Email Address</label>
+                  <input id="emailaddress" class="form-control" type="email"
+                    placeholder="Enter your email address."/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="subject">Subject</label>
+                  <select id="subject" class="form-control" name="subject">
+                    <option value="" selected="">Choose a subject:</option>
+                    <option value="Comments">Comments</option>
+                    <option value="Suggestions">Suggestions</option>
+                    <option value="Questions">Questions</option>
+                    <option value="Bug Reports">Bug Reports</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <div id="message-box" class="form-group">
+                  <label for="message">Message</label>
+                  <textarea id="message" class="input-xlarge form-control"
+                    name="message" rows="10"
+                    placeholder="Enter your message for the developers of GameTime."></textarea>
+                </div>
+              </div>
+
+              <div>
+                <div class="col-lg-12">
+                  <button id="send" type="submit" class="btn btn-primary">
+                    Send message</button>
+                  <p>
+                    <small>
+                      (You can also contact the developers directly at
+                      <a href="mailto:gametime-ucb@googlegroups.com">
+                      gametime-ucb@googlegroups.com</a>.)
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div id="users">
+            <div class="page-h1"><h1>Users</h1></div>
+            <p>If you are a GameTime user, you can join
+              <a href="https://groups.google.com/forum/#!forum/gametime-users">
+              the Google Group for GameTime users</a>
+              to interact with other users. The Google Group is meant as
+              a public forum for questions and comments regarding
+              GameTime.</p>
+          </div>
+        </div>
+      </div> <!-- container -->
+
+      <hr/>
+
+      <div id="footer" class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p class="text-center">Website designed with, and inspired by,
+            <a href="http://getbootstrap.com/">Bootstrap</a> |
+            <a href="http://bootswatch.com/cosmo/">Cosmo</a>
+            theme from <a href="http://bootswatch.com/">Bootswatch</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- This code that loads JavaScript files is placed at the end of
+      the document, so that the pages load faster. -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/gametime.js"></script>
+    <!-- <script src="js/google-code-prettify/prettify.js"></script> -->
+  </body>
+</html>

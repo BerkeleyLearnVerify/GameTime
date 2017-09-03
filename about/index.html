@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameTime">
+    <meta name="author" content="">
+
+    <!-- Stylesheets -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../static/css/gametime.css" rel="stylesheet">
+    <!-- <link href="css/google-code-prettify/prettify.css"
+      rel="stylesheet"></script> -->
+
+    <title>GameTime: Toolkit for Timing Analysis of Software</title>
+  </head>
+
+  <body>
+    <div id="mainnav" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle"
+              data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../">GameTime</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../about">About</a></li>
+            <li><a href="../getting-started">Getting started</a></li>
+            <li><a href="../tutorials">Tutorials</a></li>
+            <li><a href="../documentation">Documentation</a></li>
+            <li><a href="../contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="jumbotron-hero" class="jumbotron">
+      <div class="container">
+        <h1>What's this about?</h1>
+        <p>Background and information on GameTime.</p>
+      </div>
+    </div> <!-- jumbotron-hero -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3" id="sidenav-wrapper">
+          <div id="sidenav" role="navigation">
+            <div class="well well-sm">
+              <ul class="nav">
+                <li><a href="#background" class="navigate">
+                  Background</a></li>
+                <li><a href="#publications" class="navigate">
+                  Publications</a></li>
+                <li><a href="#contributors" class="navigate">
+                  Contributors</a></li>
+                <li><a href="#licenses" class="navigate">
+                  Licenses</a></li>
+                <li><a href="#acknowledgments" class="navigate">
+                  Acknowledgments</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div id="background">
+            <div class="page-h1"><h1>Background</h1></div>
+            <div>
+              <p>GameTime is an open-source toolkit for the timing analysis of
+                software. It is targeted towards embedded software,
+                particularly for sequential, terminating programs.
+                The core algorithm of GameTime is based on a combination of
+                game-theoretic online learning of a platform model, and
+                systematic testing on the target platform, leveraging
+                satisfiability modulo theories (SMT) solvers.</p>
+              <p>In contrast with many existing tools for timing analysis,
+                GameTime can be used for a range of tasks that involve
+                the prediction of an execution time property, including:
+                <ul>
+                  <li>Estimating the worst-case execution time (WCET).</li>
+                  <li>Estimating the distribution of execution times.</li>
+                  <li>Detecting timing-related bugs by generating test cases
+                    that violate program deadlines.</li>
+                  <li>Predicting execution times of particular program path
+                    as part of software-in-the-loop simulations.</li>
+                </ul>
+                GameTime reduces the potentially exponentially large path space
+                of a program to a polynomial number of <em>basis paths</em>.
+                This reduction enables the tool to perform only a polynomial
+                number of measurements on the target platform, which is
+                very useful in practice as accurate measurements can be tedious
+                and expensive. The use of machine learning to generate
+                a platform model enables GameTime to be easily ported to any
+                platform on which accurate path measurements can be made.</p>
+            </div>
+          </div>
+
+          <div id="publications">
+            <div class="page-h1"><h1>Publications</h1></div>
+            <div>
+              <ol>
+                <li>Sanjit A. Seshia and Jonathan Kotker.
+                  <strong>GameTime: A Toolkit for Timing Analysis of
+                  Software</strong>. In <em>Proceedings of Tools and Algorithms
+                  for the Construction and Analysis of Systems (TACAS)</em>,
+                  pp. 388&ndash;392, March 2011.
+                  [ <a href="http://www.eecs.berkeley.edu/~sseshia/pubs/b2hd-seshia-tacas11.html">HTML</a> |
+                  <a href="http://www.eecs.berkeley.edu/~sseshia/pubdir/tacas11-gametime.pdf">PDF</a> |
+                  Presentation ( <a href="../pubs/tacas11.pptx">PPTX</a> |
+                  <a href="../pubs/tacas11.pdf">PDF</a> ) ]</li>
+                <li>Sanjit A. Seshia and Alexander Rakhlin.
+                  <strong>Game-Theoretic Timing Analysis</strong>. In
+                  <em>Proceedings of the IEEE/ACM International Conference
+                  on Computer-Aided Design (ICCAD)</em>,
+                  pp. 575&ndash;582, IEEE Press, November 2008.
+                  [ <a href="http://dl.acm.org/citation.cfm?doid=1509456.1509584">HTML</a> ]</li>
+                <li>Sanjit A. Seshia and Alexander Rakhlin.
+                  <strong>Quantitative Analysis of Systems Using
+                  Game-Theoretic Learning</strong>. In <em>ACM Transactions on
+                  Embedded Computing Systems (TECS)</em>,
+                  11(S2):55:1&ndash;55:27, August 2012.
+                  [ <a href="http://www.eecs.berkeley.edu/~sseshia/pubs/b2hd-seshia-acmtecs10.html">HTML</a> |
+                  <a href="http://www.eecs.berkeley.edu/~sseshia/pubdir/gametime-acmtecs.pdf">PDF</a> ]</li>
+                <li>Jonathan Kotker. <strong>The Internals of GameTime:
+                  Implementation and Evaluation of a Timing Analyzer for
+                  Embedded Software</strong>. Master's Thesis.
+                  Technical Report No. UCB/EECS-2013-116.
+                  [ <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2013/EECS-2013-116.html">HTML</a> |
+                  <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2013/EECS-2013-116.pdf">PDF</a> ]</li>
+                <li>Jonathan Kotker, Dorsa Sadigh, and Sanjit A. Seshia.
+                  <strong>Timing Analysis of Interrupt-Driven Programs under
+                  Context Bounds</strong>. In <em>Proceedings of the IEEE
+                  International Conference on Formal Methods in Computer-Aided
+                  Design (FMCAD)</em>, pp. 81&ndash;90, October 2011.
+                  [ <a href="http://www.eecs.berkeley.edu/~sseshia/pubs/b2hd-kotker-fmcad11.html">HTML</a> |
+                  <a href="http://uclid.eecs.berkeley.edu/gametime/fmcad11/gametime-fmcad11.pdf">PDF</a> ]</li>
+                <li>Daniel Bundala and Sanjit A. Seshia.
+                  <strong>
+                    On Systematic Testing for Execution-Time Analysis
+                  </strong>. <em> (preprint)</em>, 2015.
+                  [ <a href="http://arxiv.org/abs/1506.05893">HTML</a> |
+                  <a href="http://arxiv.org/pdf/1506.05893v1">PDF</a> ]</li>                  
+              </ol>
+            </div>
+          </div>
+
+          <div id="contributors">
+            <div class="page-h1"><h1>Contributors</h1></div>
+            <div>
+              <p>GameTime is developed and maintained by
+                <a href="http://www.eecs.berkeley.edu/~sseshia">
+                  Sanjit A. Seshia
+                </a> at
+                <a href="http://www.berkeley.edu">
+                  University of California, Berkeley
+                </a> and his students (current and former):
+                Jonathan Kotker, Daniel Bundala, James Ferguson, Andrew H. Chan,
+                Ankush Desai, Sagar Jain, Garvit Juniwal, Zach Wasson, Min Xu,
+                and Lisa Yan.
+              </p>
+            </div>
+          </div>
+          
+          <div id="licenses">
+            <div class="page-h1"><h1>Licenses</h1></div>
+            <div>
+              <p>GameTime is released under the modified BSD license,
+              described in the included file <tt>LICENSE</tt>, which
+              is also available <a href="LICENSE">here</a>.
+
+              The licenses for the various open-source tools and packages
+              used by GameTime are:</p>
+              <ul>
+                <li><a href="http://www.cs.berkeley.edu/~necula/cil/">CIL</a>
+                  is released under
+                  <a href="http://www.cs.berkeley.edu/~necula/cil/cil018.html">the BSD license</a>.
+                </li>
+                <!-- Add your SSH library here. -->
+                <li><a href="http://networkx.github.io/"><tt>networkx</tt></a>
+                  is released under
+                  <a href="http://networkx.github.io/documentation/latest/reference/legal.html">the BSD license</a>.
+                </li>
+                <li><a href="http://www.numpy.org/"><tt>numpy</tt></a>
+                  is released under
+                  <a href="http://www.numpy.org/license.html">the BSD license</a>.
+                </li>
+                <li><a href="http://www.dabeaz.com/ply/"><tt>ply</tt></a>
+                  is released under
+                  <a href="http://www.dabeaz.com/ply/README.txt">the BSD license</a>.
+                </li>
+                <li><a href="https://code.google.com/p/pulp-or/"><tt>pulp</tt></a>
+                  is released under
+                  <a href="http://opensource.org/licenses/mit-license.php">the MIT license</a>.
+                </li>
+                <li><a href="http://pyparsing.wikispaces.com/"><tt>pyparsing</tt></a>
+                  is released under
+                  <a href="http://opensource.org/licenses/mit-license.php">the MIT license</a>.
+                </li>
+                <li><a href="http://www.pyside.org/">PySide</a>
+                  is released under
+                  <a href="http://qt-project.org/wiki/About-PySide">the GNU
+                  Lesser General Public License (LGPL), version 2.1</a>.</li>
+                <li><a href="http://pythonhosted.org/setuptools/"><tt>setuptools</tt></a>
+                  is released under
+                  <a href="http://foundation.zope.org/agreements/ZPL_2.1.pdf">the PSF
+                  or ZPL license</a>.</li>
+              </ul>
+              <p>The GameTime download includes the software development kit,
+                <a href="http://research.microsoft.com/en-us/collaboration/focus/cs/phoenix.aspx">Phoenix</a>,
+                from Microsoft Corporation. Please read the end user license
+                displayed when installing Phoenix for usage rights.</p>
+              <p>GameTime can also use
+                <a href="http://www.gnu.org/software/coreutils/">the GNU Coreutils</a>
+                and
+                <a href="http://www.gnu.org/software/glpk/">the GNU Linear Programming Kit</a>,
+                both of which are released under
+                <a href="http://www.gnu.org/licenses/gpl-3.0.html">the GNU General
+                Public License (GPL), version 3</a>.</p>
+            </div>
+          </div>
+
+          <div id="acknowledgments">
+            <div class="page-h1"><h1>Acknowledgments</h1></div>
+            <div>
+              <p>This work was supported in part by NSF grants CNS-0644436,
+                CNS-0627734, and CNS-1035672; an Alfred P. Sloan Research
+                Fellowship; the Multiscale Systems Center (MuSyC), one of
+                six research centers funded under the Focus Center Research
+                Program (FCRP), a Semiconductor Research Corporation entity;
+                and the TerraSwarm Research Center.</p>
+            </div>
+          </div>
+        </div>
+      </div> <!-- container -->
+
+      <hr/>
+
+      <div id="footer" class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p class="text-center">Website designed with, and inspired by,
+            <a href="http://getbootstrap.com/">Bootstrap</a> |
+            <a href="http://bootswatch.com/cosmo/">Cosmo</a>
+            theme from <a href="http://bootswatch.com/">Bootswatch</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- This code that loads JavaScript files is placed at the end of
+      the document, so that the pages load faster. -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/gametime.js"></script>
+    <!-- <script src="js/google-code-prettify/prettify.js"></script> -->
+  </body>
+</html>

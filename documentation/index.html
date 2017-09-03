@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameTime">
+    <meta name="author" content="">
+
+    <!-- Stylesheets -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../static/css/gametime.css" rel="stylesheet">
+    <!-- <link href="css/google-code-prettify/prettify.css"
+      rel="stylesheet"></script> -->
+
+    <title>GameTime: Toolkit for Timing Analysis of Software</title>
+  </head>
+
+  <body>
+    <div id="mainnav" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle"
+              data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../">GameTime</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../about">About</a></li>
+            <li><a href="../getting-started">Getting started</a></li>
+            <li><a href="../tutorials">Tutorials</a></li>
+            <li><a href="../documentation">Documentation</a></li>
+            <li><a href="../contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="jumbotron-hero" class="jumbotron">
+      <div class="container">
+        <h1>The more you know.</h1>
+        <p>Documentation for various components of GameTime.</p>
+      </div>
+    </div> <!-- jumbotron-hero -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3" id="sidenav-wrapper">
+          <div id="sidenav" role="navigation">
+            <div class="well well-sm">
+              <ul class="nav">
+                <li>
+                  <a href="#project-configuration-files" class="navigate">
+                    Project Configuration Files
+                  </a>
+                </li>
+                <li>
+                  <a href="#sandbox-script" class="navigate">
+                    Sandbox Script
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div id="project-configuration-files">
+            <div class="page-h1"><h1>Project Configuration Files</h1></div>
+            <p>The <em>project configuration file</em> is an XML file
+              that allows you to configure a GameTime project. A sample
+              project configuration file is provided in the <tt>sandbox</tt>
+              directory of the GameTime distribution (and also available
+              <a href="sampleProjectConfig.xml">here</a>). The schema of
+              the project configuration file is described below. Click on
+              the tags to expand or collapse their descriptions and
+              their children tags.</p>
+
+            <div class="panel-group" id="acc-gametime-project">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-gametime-project"
+                    href="#gametime-project">
+                    <code>&lt;gametime-project&gt;</code>
+                  </a>
+                </div>
+
+                <div id="gametime-project" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Contains options to configure GameTime for
+                      a specific project.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-file">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-file" href="#file">
+                          <code>&lt;file&gt;</code>
+                        </a>
+                      </div>
+
+                      <div id="file" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <div class="parent-tag-info">
+                            Contains and maintains information about
+                            the function that is analyzed by GameTime.
+                          </div>
+
+                          <div class="panel panel-default" id="acc-location">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-location" href="#location">
+                                <code>&lt;location&gt;</code>
+                              </a>
+                            </div>
+                            <div id="location"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Location of the C file that contains
+                                the function that is analyzed by GameTime.
+                                This location can be either absolute or
+                                relative: if relative, the location is
+                                resolved with respect to the directory that
+                                contains the project configuration XML file.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/location&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- location -->
+
+                          <div class="panel panel-default"
+                            id="acc-analysis-function">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-analysis-function"
+                                href="#analysis-function">
+                                <code>&lt;analysis-function&gt;</code>
+                              </a>
+                            </div>
+                            <div id="analysis-function"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Name of the function that is analyzed by
+                                GameTime.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/analysis-function&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- analysis-function -->
+
+                          <div class="panel panel-default" id="acc-start-label">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-start-label"
+                                href="#start-label">
+                                <code>&lt;start-label&gt;</code>
+                              </a>
+                            </div>
+                            <div id="start-label"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Label in the function where GameTime starts
+                                the analysis from. If left empty, GameTime will
+                                start the analysis of the function from its
+                                beginning.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/start-label&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- start-label -->
+
+                          <div class="panel panel-default" id="acc-end-label">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-end-label"
+                                href="#end-label">
+                                <code>&lt;end-label&gt;</code>
+                              </a>
+                            </div>
+                            <div id="end-label"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Label in the function where GameTime ends
+                                its analysis at. If left empty, GameTime will
+                                end the analysis of the function at its end.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/end-label&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- end-label -->
+                        </div>
+                        <div class="panel-heading panel-bottom">
+                          <code>&lt;/file&gt;</code>
+                        </div>
+                      </div>
+                    </div> <!-- file -->
+
+                    <div class="panel panel-default" id="acc-preprocess">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-preprocess" href="#preprocess">
+                          <code>&lt;preprocess&gt;</code>
+                        </a>
+                      </div>
+
+                      <div id="preprocess" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <div class="parent-tag-info">
+                            Contains configuration options for preprocessing
+                            the file using source-to-source transformations
+                            before analysis.
+                          </div>
+
+                          <div class="panel panel-default" id="acc-include">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-include" href="#include">
+                                <code>&lt;include&gt;</code>
+                              </a>
+                            </div>
+                            <div id="include"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Locations of directories that contain other
+                                files that need to be compiled and linked,
+                                but not preprocessed, with the file that
+                                contains the function to be analyzed, such as
+                                header files. More than one directory can be
+                                specified, and the names must be separated by
+                                either whitespaces or commas. The locations
+                                can be either absolute or relative: if relative,
+                                a location is resolved with respect to
+                                the directory that contains the project
+                                configuration XML file.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/include&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- include -->
+
+                          <div class="panel panel-default" id="acc-merge">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-merge" href="#merge">
+                                <code>&lt;merge&gt;</code>
+                              </a>
+                            </div>
+                            <div id="merge"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Locations of other files to be merged and
+                                preprocessed with the file that contains
+                                the function to be analyzed. More than one
+                                file can be specified, and the names must be
+                                separated by either whitespaces or commas.
+                                Unix-style globs are also permitted.
+                                The locations can be either absolute or
+                                relative: if relative, a location is resolved
+                                with respect to the directory that contains
+                                the project configuration XML file.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/merge&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- merge -->
+
+                          <div class="panel panel-default" id="acc-inline">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-inline" href="#inline">
+                                <code>&lt;inline&gt;</code>
+                              </a>
+                            </div>
+                            <div id="inline" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Functions to inline, if any. More than one
+                                function can be specified, and the names must
+                                be separated by whitespaces or commas.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/inline&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- inline -->
+
+                          <div class="panel panel-default"
+                            id="acc-unroll-loops">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-unroll-loops"
+                                href="#unroll-loops">
+                                <code>&lt;unroll-loops&gt;</code>
+                              </a>
+                            </div>
+                            <div id="unroll-loops"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                If added, this tag asks GameTime to unroll
+                                loops in the code. No content is required
+                                for this tag.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/unroll-loops&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- unroll-loops -->
+                        </div>
+                        <div class="panel-heading panel-bottom">
+                          <code>&lt;/preprocess&gt;</code>
+                        </div>
+                      </div>
+                    </div> <!-- preprocess -->
+
+                    <div class="panel panel-default" id="acc-analysis">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-analysis" href="#analysis">
+                          <code>&lt;analysis&gt;</code>
+                        </a>
+                      </div>
+
+                      <div id="analysis" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <div class="parent-tag-info">
+                            Contains configuration options for various
+                            features of the GameTime analysis.
+                          </div>
+
+                          <div class="panel panel-default" id="acc-rib">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-rib" href="#rib">
+                                <code>&lt;randomize-initial-basis&gt;</code>
+                              </a>
+                            </div>
+                            <div id="rib" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                If added, this tag asks GameTime to randomize
+                                the basis that it starts the analysis with.
+                                Without randomization, the initial basis is
+                                the standard basis. No content is required
+                                for this tag.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/randomize-initial-basis&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- rib -->
+
+                          <div class="panel panel-default" id="acc-dt">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-dt" href="#dt">
+                                <code>&lt;determinant-threshold&gt;</code>
+                              </a>
+                            </div>
+                            <div id="dt" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Threshold below which the determinant of
+                                the basis matrix is considered
+                                &quot;too small&quot;. The default
+                                threshold is 0.001.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/determinant-threshold&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- dt -->
+
+                          <div class="panel panel-default" id="acc-mip">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-mip" href="#mip">
+                                <code>&lt;max-infeasible-paths&gt;</code>
+                              </a>
+                            </div>
+                            <div id="mip" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Maximum number of infeasible paths that
+                                can be explored before the row of a basis
+                                matrix is considered &quot;bad&quot;.
+                                The default maximum number is 100.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/max-infeasible-paths&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- mip -->
+
+                          <div class="panel panel-default" id="acc-mana">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-mana" href="#mana">
+                                <code>&lt;model-as-nested-arrays&gt;</code>
+                              </a>
+                            </div>
+                            <div id="mana" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                If added, this tag asks GameTime to model
+                                multi-dimensional arrays as nested arrays,
+                                or arrays whose elements can also be arrays,
+                                in an SMT query. If not added,
+                                a multi-dimensional array will be modeled as
+                                a one-dimensional array, and the indices
+                                of an access will be concatenated.
+                                No content is required for this tag.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/model-as-nested-arrays&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- mana -->
+
+                          <div class="panel panel-default" id="acc-pbr">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-pbr" href="#pbr">
+                                <code>&lt;prevent-basis-refinement&gt;</code>
+                              </a>
+                            </div>
+                            <div id="pbr" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                If added, this tag prevents GameTime from
+                                refining the basis into a 2-barycentric
+                                spanner. No content is required for this tag.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/prevent-basis-refinement&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- pbr -->
+
+                          <div class="panel panel-default" id="acc-ilp-solver">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-ilp-solver"
+                                href="#ilp-solver">
+                                <code>&lt;ilp-solver&gt;</code>
+                              </a>
+                            </div>
+                            <div id="ilp-solver"
+                              class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Integer linear programming solver used
+                                to solve integer linear programs to generate
+                                candidate paths.<br/>
+                                The following options are recognized:
+                                <ul>
+                                  <li><code>cbc</code> for
+                                    <a href="https://projects.coin-or.org/Cbc">CBC</a>.</li>
+                                  <li><code>cbc-pulp</code> for the version of
+                                    <a href="https://projects.coin-or.org/Cbc">CBC</a>
+                                    provided with the
+                                    <a href="https://code.google.com/p/pulp-or/"><tt>pulp</tt></a>
+                                    Python package.</li>
+                                  <li><code>cplex</code> for
+                                    <a href="http://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/">CPLEX</a>.</li>
+                                  <li><code>glpk</code> for
+                                    <a href="http://www.gnu.org/software/glpk/">GLPK</a>.</li>
+                                  <li><code>gurobi</code> for
+                                    <a href="http://www.gurobi.com/">Gurobi</a>.</li>
+                                  <li><code>xpress</code> for
+                                    <a href="http://www.fico.com/en/Products/DMTools/xpress-overview/Pages/Xpress-Optimizer.aspx">Xpress</a>.</li>
+                                </ul>
+                                If no solver is specified, the default solver of
+                                the
+                                <a href="https://code.google.com/p/pulp-or/"><tt>pulp</tt></a>
+                                Python package will be used.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/ilp-solver&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- ilp-solver -->
+
+                          <div class="panel panel-default" id="acc-smt-solver">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-smt-solver" href="#smt-solver">
+                                <code>&lt;smt-solver&gt;</code>
+                              </a>
+                            </div>
+                            <div id="smt-solver" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                SMT solver that GameTime uses to check
+                                the satisfiability of an SMT query.<br/>
+                                The following options are recognized:
+                                <ul>
+                                  <li><code>boolector</code>
+                                    (or <code>boolector-lingeling</code>)
+                                    for
+                                    <a href="http://fmv.jku.at/boolector/">Boolector</a>
+                                    with
+                                    <a href="http://fmv.jku.at/lingeling/">Lingeling</a>
+                                    as the SAT solver.</li>
+                                  <li><code>boolector-minisat</code> for
+                                    <a href="http://fmv.jku.at/boolector/">Boolector</a>
+                                    with
+                                    <a href="http://minisat.se/">MiniSat</a>
+                                    as the SAT solver.</li>
+                                  <li><code>boolector-picosat</code> for
+                                    <a href="http://fmv.jku.at/boolector/">Boolector</a>
+                                    with
+                                    <a href="http://fmv.jku.at/picosat/">PicoSAT</a>
+                                    as the SAT solver.</li>
+                                  <li><code>z3</code> for
+                                  <a href="http://z3.codeplex.com/">Z3</a>.</li>
+                                </ul>
+                                An SMT solver <em>must</em> be specified.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/smt-solver&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- smt-solver -->
+
+                          <div class="panel panel-default" id="acc-maximum-error-scale-factor">
+                            <div class="panel-heading panel-title">
+                              <a class="no-underline" data-toggle="collapse"
+                                data-parent="#acc-maximum-error-scale-factor" href="#maximum-error-scale-factor">
+                                <code>&lt;maximum-error-scale-factor&gt;</code>
+                              </a>
+                            </div>
+                            <div id="maximum-error-scale-factor" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                Specifies the accuracy of the overcomplete
+                                basis. This parameter is used only when the
+                                <code>--overcomplete_basis</code> command line
+                                flag is used.
+                              </div>
+                              <div class="panel-heading panel-bottom">
+                                <code>&lt;/maximum-error-scale-factor&gt;</code>
+                              </div>
+                            </div>
+                          </div> <!-- maximum-error-scale-factor -->
+
+
+                        </div>
+                        <div class="panel-heading panel-bottom">
+                          <code>&lt;/analysis&gt;</code>
+                        </div>
+                      </div>
+                    </div> <!-- analysis -->
+                  </div>
+                  <div class="panel-heading panel-bottom">
+                    <code>&lt;/gametime-project&gt;</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="sandbox-script">
+            <div class="page-h1"><h1>Sandbox Script</h1></div>
+            <p>The <em>sandbox script</em> is a ready-made Python script
+              located within the <tt>sandbox</tt> directory in the GameTime
+              distribution: the directory is intended for user projects,
+              although projects can be placed at any writable location
+              in the filesystem. This script, available at
+              <tt>sandbox/analyzeProject.py</tt>, uses the Python interface
+              to the GameTime toolkit.</p>
+            <p>The GameTime distribution also contains a batch script,
+              available at <tt>gametime.bat</tt>, which sets up
+              a prompt and several environment variables needed for
+              the functioning of GameTime. The batch script can be used
+              to interact with the sandbox script:
+              the command <code>analyze</code>, when used at the prompt,
+              is an alias for the command
+              <code>python sandbox/analyzeProject.py</code>.</p>
+            <p>The command-line arguments for the sandbox script, and thus
+              for the command <code>analyze</code>, are described below,
+              separated into sections according to their intended usages.
+              Click on the section titles and the command-line arguments
+              to expand or collapse their descriptions. For arguments that
+              expect a location on the filesystem, the relative locations are
+              resolved against the current working directory.</p>
+            <p>This documentation can also be obtained through either
+              the command <code>analyze --help</code> or the command
+              <code>analyze -h</code>.</p>
+
+            <div class="panel-group" id="acc-ss-cla-a">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-ss-cla-a" href="#ss-cla-a">
+                    Optional command-line arguments for GameTime analysis</a>
+                </div>
+
+                <div id="ss-cla-a" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Options to initialize and save the GameTime analysis.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-ss-analyze">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-analyze" href="#ss-analyze">
+                          <code>-a LOCATION</code>,
+                          <code>--analyze LOCATION</code>
+                        </a>
+                      </div>
+                      <div id="ss-analyze" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Location of the XML file that configures a GameTime
+                          project. The location of a directory can also be
+                          provided, in which case the first XML file found in
+                          the directory will be used to configure a GameTime
+                          project. If this argument is not provided, the XML
+                          file located in the GameTime source distribution
+                          at <tt>demo/modexp_unrolled/projectConfig.xml</tt>
+                          will be used.
+                        </div>
+                      </div>
+                    </div> <!-- ss-analyze -->
+
+                    <div class="panel panel-default" id="acc-ss-al">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-al" href="#ss-al">
+                          <code>--analyzer-location LOCATION</code>
+                        </a>
+                      </div>
+                      <div id="ss-al" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Location where the analyzer is saved. If this
+                          argument is not provided, the analyzer is saved to
+                          a file called <tt>analyzer</tt> in a temporary
+                          directory called <tt>analysis</tt>, created within
+                          the directory that contains the code to analyze.
+                        </div>
+                      </div>
+                    </div> <!-- ss-al -->
+                  </div>
+                </div>
+              </div>
+            </div> <!-- ss-cla-a -->
+
+            <br/>
+
+            <div class="panel-group" id="acc-ss-cla-p">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-ss-cla-p" href="#ss-cla-p">
+                    Optional command-line arguments for preprocessing</a>
+                </div>
+
+                <div id="ss-cla-p" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Options to preprocess the code to analyze.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-ss-ul">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-ul" href="#ss-ul">
+                          <code>--unroll-loops</code>
+                        </a>
+                      </div>
+                      <div id="ss-ul" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Unrolls the loops in the code under analysis, using
+                          the bounds provided by the user in the loop
+                          configuration file generated during loop detection.
+                          The use of this option overrides the corresponding
+                          tag (
+                          <a href="#acc-unroll-loops" class="no-underline">
+                            <code>&lt;unroll-loops&gt;</code></a>
+                          ) in the project configuration XML file.
+                        </div>
+                      </div>
+                    </div> <!-- ss-ul -->
+                  </div>
+                </div>
+              </div>
+            </div> <!-- ss-cla-p -->
+
+            <br/>
+
+            <div class="panel-group" id="acc-ss-cla-fbp">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-ss-cla-fbp" href="#ss-cla-fbp">
+                    Optional command-line arguments for feasible basis paths</a>
+                </div>
+
+                <div id="ss-cla-fbp" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Options to generate basis paths.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-ss-basis">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-basis" href="#ss-basis">
+                          <code>-b</code>, <code>--basis</code>
+                        </a>
+                      </div>
+                      <div id="ss-basis" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates the basis paths of the code under analysis,
+                          and writes them to files in a temporary directory
+                          called <tt>analysis</tt>, created within
+                          the directory that contains the code to analyze.
+                        </div>
+                      </div>
+                    </div> <!-- ss-basis -->
+                    
+                    <div class="panel panel-default" id="acc-ss-overcomplete-basis">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-overcomplete-basis" href="#ss-overcomplete-basis">
+                          <code>--overcomplete_basis</code>
+                        </a>
+                      </div>
+                      <div id="ss-overcomplete-basis" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates an overcomplete basis paths of the code
+                          under analysis. The accuracy of the overcomplete
+                          basis is specified by the parameter
+                          <a href="#acc-maximum-error-scale-factor">
+                              <code>maximum-error-scale-factor</code></a>.
+                          The paths are written to files in a temporary
+                          directory called <tt>analysis</tt>, created within
+                          the directory that contains the code to analyze.
+
+                          If this flag is used, then use the flag
+                          <code>--ob_extraction</code> to generate predictions
+                          of the lengest feasible paths.
+                        </div>
+                      </div>
+                    </div> <!-- ss-overcomplete-basis -->
+                  </div>
+                </div>
+              </div>
+            </div> <!-- ss-cla-fbp -->
+
+            <br/>
+
+            <div class="panel-group" id="acc-ss-cla-ofp">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-ss-cla-ofp" href="#ss-cla-ofp">
+                    Optional command-line arguments for
+                    other types of feasible paths</a>
+                </div>
+
+                <div id="ss-cla-ofp" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Options to generate other types of feasible paths,
+                      once the basis paths have been generated. All paths are
+                      also written to files in a temporary directory called
+                      <tt>analysis</tt>, created within the directory that
+                      contains the code to analyze, and the predicted values
+                      of these paths are also saved to a file whose name has
+                      the prefix <tt>predicted-</tt>.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-ss-values">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-values" href="#ss-values">
+                          <code>--values FILE</code>
+                        </a>
+                      </div>
+                      <div id="ss-values" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Location of the file that contains the values to be
+                          associated with the basis paths. If this argument is
+                          not provided, this script assumes that this file is
+                          called <tt>measured-basis</tt>, located in
+                          the temporary directory called <tt>analysis</tt>.
+                        </div>
+                      </div>
+                    </div> <!-- ss-values -->
+
+                    <div class="panel panel-default" id="acc-ss-num-paths">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-num-paths" href="#ss-num-paths">
+                          <code>-n NUM</code>, <code>--num-paths NUM</code>
+                        </a>
+                      </div>
+                      <div id="ss-num-paths" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Upper bound on the number of paths to generate. This
+                          value is ignored if all feasible paths are being
+                          generated. The default value is 5.
+                        </div>
+                      </div>
+                    </div> <!-- ss-num-paths -->
+
+                    <div class="panel panel-default" id="acc-ss-worst-case">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-worst-case"
+                          href="#ss-worst-case">
+                          <code>-w</code>, <code>--worst-case</code>
+                        </a>
+                      </div>
+                      <div id="ss-worst-case"
+                        class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates the worst-case feasible paths of the code
+                          under analysis (paths with the largest values).
+                        </div>
+                      </div>
+                    </div> <!-- ss-worst-case -->
+
+                    <div class="panel panel-default" id="acc-ss-ob-extraction">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-ob-extraction"
+                          href="#ss-ob-extraction">
+                          <code>--ob_extraction</code>
+                        </a>
+                      </div>
+                      <div id="ss-ob-extraction"
+                        class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates the worst-case feasible paths of the code
+                          under analysis (paths with the largest values).
+                        </div>
+                      </div>
+                    </div> <!-- ss-ob-extraction -->
+
+
+
+                    <div class="panel panel-default" id="acc-ss-best-case">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-best-case" href="#ss-best-case">
+                          <code>-v</code>, <code>--best-case</code>
+                        </a>
+                      </div>
+                      <div id="ss-best-case" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates the best-case feasible paths of the code
+                          under analysis (paths with the smallest values).
+                        </div>
+                      </div>
+                    </div> <!-- ss-best-case -->
+
+                    <div class="panel panel-default" id="acc-ss-random">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-random" href="#ss-random">
+                          <code>-r</code>, <code>--random</code>
+                        </a>
+                      </div>
+                      <div id="ss-random" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates random feasible paths of the code under
+                          analysis.
+                        </div>
+                      </div>
+                    </div> <!-- ss-random -->
+
+                    <div class="panel panel-default" id="acc-ss-all-dec">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-all-dec" href="#ss-all-dec">
+                          <code>-d</code>, <code>--all-decreasing</code>
+                        </a>
+                      </div>
+                      <div id="ss-all-dec" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates all feasible paths of the code under
+                          analysis (in decreasing order of value). <br/>
+                          <strong>Warning</strong>: The total number of
+                          feasible paths can be very large.
+                        </div>
+                      </div>
+                    </div> <!-- ss-all-dec -->
+
+                    <div class="panel panel-default" id="acc-ss-all-inc">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-all-inc" href="#ss-all-inc">
+                          <code>-i</code>, <code>--all-increasing</code>
+                        </a>
+                      </div>
+                      <div id="ss-all-inc" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Generates all feasible paths of the code under
+                          analysis (in increasing order of value). <br/>
+                          <strong>Warning</strong>: The total number of
+                          feasible paths can be very large.
+                        </div>
+                      </div>
+                    </div> <!-- ss-all-inc -->
+
+                    <div class="panel panel-default" id="acc-ss-lower">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-lower" href="#ss-lower">
+                          <code>-l BOUND</code>, <code>--lower BOUND</code>
+                        </a>
+                      </div>
+                      <div id="ss-lower" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Lower bound on the values of the feasible paths that
+                          are generated. If this argument is not provided, no
+                          lower bound is assumed.
+                        </div>
+                      </div>
+                    </div> <!-- ss-lower -->
+
+                    <div class="panel panel-default" id="acc-ss-upper">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-upper" href="#ss-upper">
+                          <code>-u BOUND</code>, <code>--upper BOUND</code>
+                        </a>
+                      </div>
+                      <div id="ss-upper" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Upper bound on the values of the feasible paths that
+                          are generated. If this argument is not provided, no
+                          upper bound is assumed.
+                        </div>
+                      </div>
+                    </div> <!-- ss-upper -->
+                  </div>
+                </div>
+              </div>
+            </div> <!-- ss-cla-ofp -->
+
+            <br/>
+
+            <div class="panel-group" id="acc-ss-cla-mfp">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-ss-cla-mfp" href="#ss-cla-mfp">
+                    Optional command-line arguments for measurement of
+                    values of feasible paths</a>
+                </div>
+
+                <div id="ss-cla-mfp" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Options to measure the values of all types of
+                      feasible paths, including feasible basis paths.
+                      The files that store the measurements and predictions
+                      are located in the temporary directory called
+                      <tt>analysis</tt>.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-ss-measure-tests">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-measure-tests"
+                          href="#ss-measure-tests">
+                          <code>-m</code>, <code>--measure-tests</code>
+                        </a>
+                      </div>
+                      <div id="ss-measure-tests"
+                        class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Creates test cases for each feasible path generated,
+                          and measures the value of each test case on the
+                          specified simulator. This option can be used with any
+                          other option that generates feasible paths. The
+                          measurements are saved to a file whose name has the
+                          prefix <tt>measured-</tt>. If none of these other
+                          options are used, the test cases for the feasible
+                          basis paths are created and measured, and
+                          the measurements are saved to a file called
+                          <tt>measured-basis</tt>. However, this assumes that
+                          the feasible basis paths have already been generated.
+                        </div>
+                      </div>
+                    </div> <!-- ss-measure-tests -->
+
+                    <div class="panel panel-default" id="acc-ss-simulator">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-simulator" href="#ss-simulator">
+                          <code>-s {ptarm,simit-arm}</code>,
+                          <code>--simulator {ptarm,simit-arm}</code>
+                        </a>
+                      </div>
+                      <div id="ss-simulator" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Simulator to measure the cycle counts of the test case
+                          files on. The default simulator is <code>ptarm</code>.
+                        </div>
+                      </div>
+                    </div> <!-- ss-simulator -->
+                  </div>
+                </div>
+              </div>
+            </div> <!-- ss-cla-mfp -->
+
+            <br/>
+
+            <div class="panel-group" id="acc-ss-cla-hist">
+              <div class="panel panel-default">
+                <div class="panel-heading panel-title">
+                  <a class="no-underline" data-toggle="collapse"
+                    data-parent="#acc-ss-cla-hist" href="#ss-cla-hist">
+                    Optional command-line arguments for creating histograms
+                    from the values of feasible paths</a>
+                </div>
+
+                <div id="ss-cla-hist" class="panel-collapse collapse in">
+                  <div class="panel-body">
+                    <div class="parent-tag-info">
+                      Options to create histograms computed from the values of
+                      all types of feasible paths, including feasible basis
+                      paths. The files that store the histograms are located in
+                      the temporary directory called <tt>analysis</tt>.
+                    </div>
+
+                    <div class="panel panel-default" id="acc-ss-histogram">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-histogram" href="#ss-histogram">
+                          <code>--histogram</code>
+                        </a>
+                      </div>
+                      <div id="ss-histogram" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Creates a histogram from the values of feasible paths.
+                          This option can be used with any other option that
+                          generates feasible paths. <br/><br/> The histogram
+                          created from the predicted values of these feasible
+                          paths is saved to a file whose name has the prefix
+                          <tt>histogram-predicted-</tt>. If the values of these
+                          feasible paths are also measured on a simulator,
+                          using the command-line options for measurement,
+                          a histogram is created from the measured values and
+                          saved to a file whose name has the prefix
+                          <tt>histogram-measured-</tt>. If, however, none of
+                          the other options to generate feasible paths are used,
+                          or if feasible basis paths are being generated (and
+                          optionally measured), a histogram is created from the
+                          values of the feasible basis paths and saved to a file
+                          called <tt>histogram-basis</tt>.
+                        </div>
+                      </div>
+                    </div> <!-- ss-histogram -->
+
+                    <div class="panel panel-default" id="acc-ss-hist-bins">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-hist-bins" href="#ss-hist-bins">
+                          <code>--hist-bins SIZE</code>
+                        </a>
+                      </div>
+                      <div id="ss-hist-bins" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Number of equally-sized bins in the histogram that is
+                          created. If not provided, the histogram will have 10
+                          equally-sized bins. This command-line option can only
+                          be used along with the
+                          <a href="#acc-ss-histogram" class="no-underline">
+                            <code>--histogram</code></a>
+                          command-line option.
+                        </div>
+                      </div>
+                    </div> <!-- ss-hist-bins -->
+
+                    <div class="panel panel-default" id="acc-ss-hist-lower">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-hist-lower"
+                          href="#ss-hist-lower">
+                          <code>--hist-lower SIZE</code>
+                        </a>
+                      </div>
+                      <div id="ss-hist-lower"
+                        class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Lower bound of the range of path values to be
+                          considered for histogram creation. If not provided,
+                          the lower bound is the smallest value of the paths
+                          that are considered for histogram creation.
+                          This command-line option can only be used
+                          along with the
+                          <a href="#acc-ss-histogram" class="no-underline">
+                            <code>--histogram</code></a>
+                          command-line option.
+                        </div>
+                      </div>
+                    </div> <!-- ss-hist-lower -->
+
+                    <div class="panel panel-default" id="acc-ss-hist-upper">
+                      <div class="panel-heading panel-title">
+                        <a class="no-underline" data-toggle="collapse"
+                          data-parent="#acc-ss-hist-upper"
+                          href="#ss-hist-upper">
+                          <code>--hist-upper SIZE</code>
+                        </a>
+                      </div>
+                      <div id="ss-hist-upper"
+                        class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          Upper bound of the range of path values to be
+                          considered for histogram creation. If not provided,
+                          the upper bound is the greatest value of the paths
+                          that are considered for histogram creation.
+                          This command-line option can only be used
+                          along with the
+                          <a href="#acc-ss-histogram" class="no-underline">
+                            <code>--histogram</code></a>
+                          command-line option.
+                        </div>
+                      </div>
+                    </div> <!-- ss-hist-upper -->
+                  </div>
+                </div>
+              </div>
+            </div> <!-- ss-cla-hist -->
+          </div>
+        </div>
+      </div> <!-- container -->
+
+      <hr/>
+
+      <div id="footer" class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p class="text-center">Website designed with, and inspired by,
+            <a href="http://getbootstrap.com/">Bootstrap</a> |
+            <a href="http://bootswatch.com/cosmo/">Cosmo</a>
+            theme from <a href="http://bootswatch.com/">Bootswatch</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- This code that loads JavaScript files is placed at the end of
+      the document, so that the pages load faster. -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/gametime.js"></script>
+    <!-- <script src="js/google-code-prettify/prettify.js"></script> -->
+  </body>
+</html>

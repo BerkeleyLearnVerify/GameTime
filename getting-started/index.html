@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GameTime">
+    <meta name="author" content="">
+
+    <!-- Stylesheets -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="../static/css/gametime.css" rel="stylesheet">
+    <!-- <link href="css/google-code-prettify/prettify.css"
+      rel="stylesheet"></script> -->
+
+    <title>GameTime: Toolkit for Timing Analysis of Software</title>
+  </head>
+
+  <body>
+    <div id="mainnav" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle"
+              data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../">GameTime</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="../about">About</a></li>
+            <li><a href="../getting-started">Getting started</a></li>
+            <li><a href="../tutorials">Tutorials</a></li>
+            <li><a href="../documentation">Documentation</a></li>
+            <li><a href="../contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="jumbotron-hero" class="jumbotron">
+      <div class="container">
+        <h1>Let's get started.</h1>
+        <p>Instructions to download and install GameTime.</p>
+      </div>
+    </div> <!-- jumbotron-hero -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3" id="sidenav-wrapper">
+          <div id="sidenav" role="navigation">
+            <div class="well well-sm">
+              <ul class="nav">
+                <li><a href="#download" class="navigate">Downloading</a></li>
+                <li><a href="#install" class="navigate">Installation</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-9">
+          <div id="download">
+            <div class="page-h1"><h1>Downloading</h1></div>
+            <div>
+              <p>The current version of GameTime is <strong>1.5</strong>
+                (released July 2015, download size: 115 MB). The previous
+                version is also available (version 1.0, released June 2014,
+                download size: 115MB). Version 1.5 adds new feature called
+                <i>overcomplete basis</i> described in Tutorial 4 on the
+                <a href="../tutorials">tutorials page</a>.</p>
+              <p><a class="btn btn-primary btn-lg"
+                href="../dist/gametime-1.5.zip">Download GameTime 1.5</a>
+		<a class="btn btn-primary btn-lg"
+                href="../dist/gametime-1.0.zip">Download GameTime 1.0</a></p>
+              <p>To <strong>install</strong> GameTime, download and
+                follow the <a href="#install">installation instructions</a>.</p>
+              <p>To <strong>update</strong> GameTime, download and
+                follow <a href="#step-4">step 4</a> and
+                <a href="#step-5">step 5</a> of
+                the <a href="#install">installation instructions</a>.</p>
+              <p>GameTime is currently only available for Microsoft Windows.
+                Efforts are currently underway to make it available for
+                other operating systems. If you would like to contribute
+                to GameTime as a developer, please
+                <a href="../contact">contact us</a>.</p>
+            </div>
+            <div id="version-history">
+              <h2>Version History</h2>
+              <div>
+                <p><a href="../dist/gametime-1.0.zip">Version 1.0</a>
+                  (released June 2, 2014): Initial release of GameTime.</p>
+              </div>
+            </div>
+            <div id="unsupported-code-constructs">
+              <h2>Unsupported Code Constructs</h2>
+              <div>
+                <p>The list below details the code constructs that are not
+                  completely supported by the latest version of GameTime.
+                  Better support is planned and scheduled for future
+                  versions.</p>
+                <ul>
+                  <li>Floating-point values are rounded down to
+                    the nearest integer.</li>
+                  <li>Global initializers that use ternary expressions and
+                    floating-point values are not supported.</li>
+                  <li>Numeric memory addresses are not supported.</li>
+                  <li>Pointer assignment and pointer comparison are not
+                    completely supported.</li>
+                </ul>
+                <p>If you notice that GameTime is unable to deal with a code
+                  construct not listed above, please
+                  <a href="../contact">contact us</a> with information about
+                  the code construct and, preferably, a sample.</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="install">
+            <div class="page-h1"><h1>Installation</h1></div>
+              <p>If you run into any issues during installation, please
+                <a href="../contact">contact us</a> and we will respond
+                as soon as possible.</p>
+
+            <div id="step-1">
+              <h2><em>Step 1</em>: Installation of Software</h2>
+              <ol>
+                <li>
+                  <p>Install the 32-bit version of
+                    <a href="http://www.cygwin.com/">Cygwin</a>.
+                    During the Cygwin installation process, you will be asked
+                    to select packages to install. Select at least
+                    the following packages:
+                    <ul>
+                      <li><tt>automake</tt></li>
+                      <li><tt>gcc-core</tt></li>
+                      <li><tt>glpk</tt></li>
+                      <li><tt>make</tt></li>
+                      <li><tt>patch</tt>
+                      <li><tt>perl</tt></li>
+                      <li><tt>coreutils</tt> (Recommended,
+                        but not required.)</li>
+                      <li><tt>ncurses</tt> (Recommended,
+                        but not required.)</li></li>
+                    </ul>
+                  </p>
+                </li>
+                <li>
+                  <p>Install the 32-bit version of
+                    <a href="http://www.python.org/">Python</a>.
+                    The recommended version of Python is
+                    <a href="http://www.python.org/download/releases/2.7.6/">2.7.6</a>.
+                    <div class="callout callout-info">
+                      Cygwin has a version of Python that is insufficient
+                      for GameTime, so Python needs to be installed separately.
+                    </div></p>
+                </li>
+                <li>
+                  <p>Install either Microsoft Visual Studio 2008 or
+                    Microsoft Visual C++ Express 2008.<br/>If you do not have
+                    a copy of either, but you are a student or a staff member
+                    at an academic institution, you may be able to use
+                    <a href="https://www.dreamspark.com/">Microsoft
+                    DreamSpark</a>, which allows the download of
+                    <a href="https://www.dreamspark.com/Product/Product.aspx?productid=34">
+                    Microsoft Visual C++ Express 2008</a>.</p>
+                </li>
+                <li>
+                  <p>Install Microsoft Phoenix, the infrastructure for
+                    program analysis and transformation from Microsoft.
+                    We have provided a copy of the installer with
+                    the name <tt>Phoenix-SDK-June-2008-RC1.msi</tt>,
+                    located in the directory <tt>ext</tt>.
+                  </p>
+                </li>
+              </ol>
+            </div>
+
+            <div id="step-2">
+              <h2><em>Step 2</em>: Configuration of SMT Solver and
+                ILP Solver</h2>
+              <p>GameTime uses an SMT (satisfiability modulo theories) solver
+                and an ILP (integer linear programming) solver as part of
+                its workflow. It thus expects the paths to an SMT solver
+                and to an ILP solver to be available in the <tt>PATH</tt>
+                system variable. (To learn about how to add a path to
+                the <tt>PATH</tt> system variable, refer to
+                <a href="#appendix">the appendix</a>.)</p>
+
+              <p><em>At least one</em> of these SMT solvers must be
+                installed and available:</p>
+              <ul>
+                <li>
+                  <p><strong><a href="http://fmv.jku.at/boolector/">Boolector</a></strong>:
+                    Once configured and installed, add the path for
+                    the Boolector executable (<tt>boolector.exe</tt>) to
+                    the <tt>PATH</tt> system variable. Additionally, GameTime
+                    supports the use of Boolector with any of its recommended
+                    backend SAT solvers:
+                    <a href="http://fmv.jku.at/lingeling/">Lingeling</a>,
+                    <a href="http://minisat.se/">MiniSat</a>, or
+                    <a href="http://fmv.jku.at/picosat/">PicoSAT</a>.</p>
+                </li>
+                <li>
+                  <p><strong><a href="http://z3.codeplex.com/">Z3</a></strong>:
+                    Add the path for the <em>directory</em> that contains
+                    the Z3 Python interface (<tt>z3.pyc</tt>) to
+                    the <tt>PATH</tt> system variable. This interface is
+                    usually located in the <tt>bin</tt> directory of
+                    the downloaded Z3 package.</p>
+                </li>
+              </ul>
+
+              <p>In <a href="#step-1">step 1</a>, you installed
+                <a href="http://www.gnu.org/software/glpk/">the GNU
+                Linear Programming Kit</a> (<tt>glpk</tt>), which provides
+                an ILP solver. However, using
+                the <a href="https://code.google.com/p/pulp-or/"><tt>pulp</tt></a>
+                Python package, GameTime can also support the following ILP
+                solvers (if installed):
+                <a href="https://projects.coin-or.org/Cbc">CBC mixed ILP solver</a>,
+                <a href="http://www-01.ibm.com/software/commerce/optimization/cplex-optimizer/">IBM ILOG CPLEX Optimizer</a>,
+                <a href="http://www.gurobi.com/">Gurobi Optimizer</a>, and
+                <a href="http://www.fico.com/en/Products/DMTools/xpress-overview/Pages/Xpress-Optimizer.aspx">FICO Xpress Optimizer</a>.
+            </div>
+
+            <div id="step-3">
+              <h2><em>Step 3 (optional)</em>: Configuration of Simulator</h2>
+              <div class="callout callout-info">
+                This step is <em>completely optional</em>. You only need to
+                follow this step if you do not already have a platform on
+                which to run the generated test cases and to collect
+                measurements, and if you would like to obtain your own
+                measurements. In the
+                <a href="../tutorials">tutorials</a>, we have already provided
+                these measurements for the test cases obtained for
+                different demonstration files. <a data-toggle="collapse"
+                  data-target="#step-3-info">Click here</a>
+                to <span id="step-3-info-status">show</span> this step.
+              </div>
+
+              <div id="step-3-info" class="collapse">
+                <p>GameTime currently supports one simulator:
+                  <ol>
+                    <li>
+                      <p><a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html">
+                        <strong>PTARM simulator</strong></a>:
+                        This is a simulator for a precision-timed ARM
+                        architecture, developed by a collaborative effort
+                        lead by
+                        <a href="http://ptolemy.eecs.berkeley.edu/~eal/">Prof.
+                        Edward A. Lee</a> at University of California, Berkeley
+                        and <a href="http://www1.cs.columbia.edu/~sedwards/">Prof.
+                        Stephen A. Edwards</a> at Columbia University.</p>
+                      <p>To install the PTARM simulator in Cygwin, follow
+                        the process described
+                        <a href="http://chess.eecs.berkeley.edu/pret/src/ptarm-1.0/ptarm_simulator.html#Installation">here</a>,
+                        but with the following editions:
+                        <ol>
+                          <li>
+                            <p>If you are unable to access the website
+                              where the binaries for the GNU-ARM toolchain
+                              are located
+                              (<a href="http://gnuarm.com/files.html">http://gnuarm.com/files.html</a>),
+                              you may be able to access an archived version
+                              of the website, such as the one located
+                              <a href="http://web.archive.org/web/20130408061820/http://www.gnuarm.com/files.html">here</a>.</p>
+                          </li>
+                          <li>
+                            <p><strong>After the GNU-ARM toolchain has been
+                              installed as part of
+                              &quot;Requirements&quot;</strong>, copy the DLL
+                              file <tt>cygwin1.dll</tt> from the root directory
+                              of Cygwin to the <tt>bin</tt> directory located
+                              within the root directory of the GNU-ARM
+                              toolchain.</p>
+                          </li>
+                          <li>
+                            <p><strong>After the GNU-ARM toolchain has been
+                              installed as part of
+                              &quot;Requirements&quot;</strong>, add the path to
+                              the directory <tt>libexec/gcc/arm-elf/4.1.1</tt>
+                              to the <tt>PATH</tt> system variable.
+                              (To learn how to do this, refer to
+                              <a href="#appendix">the appendix</a>.)
+                          </li>
+                          <li>
+                            <p>The simulator source code needs to be modified
+                              slightly. <strong>Before the step labeled
+                              &quot;Compiling PTARM&quot;</strong>, navigate to
+                              the root directory of the simulator source code
+                              and run the following command in Cygwin to apply
+                              a patch to the source code:</p>
+                              <p><code>patch -d src/cpu &lt;
+                              <em>&lt;GAMETIME_DIR&gt;</em>/ext/ptarm-sim.diff</code></p>
+                              where <tt>GAMETIME_DIR</tt> is the path for
+                              the root directory of the GameTime source
+                              code.</p>
+                          </li>
+                          <li>
+                            <p><strong>Once the simulator has been
+                              installed</strong>, add the path for
+                              the simulator executable (<tt>pret.exe</tt>) to
+                              the <tt>PATH</tt> system variable. (To learn
+                              how to do this, refer to
+                              <a href="#appendix">the appendix</a>.)
+                              The executable should be present in
+                              the <tt>bin</tt> directory located within
+                              the root directory of the simulator
+                              source code.</p>
+                          </li>
+                        </ol>
+                      </p>
+                    </li>
+                  </ol>
+                </p>
+              </div>
+            </div>
+
+            <div id="step-4">
+              <h2><em>Step 4</em>: Configuration of Cygwin,
+                GameTime and Python</h2>
+              <ol>
+                <li>
+                  <p>Add the path for the <em>directory</em> that contains
+                    the Python interpreter, installed in the previous step,
+                    to the <tt>PATH</tt> system variable. (To learn how to
+                    do this, refer to
+                    <a href="#appendix">the appendix</a>.)</p>
+                </li>
+                <li>
+                  <p>Cygwin must be launched within the Microsoft Phoenix
+                    Command Prompt: right-click on <tt>Phoenix SDK Command
+                    Prompt - Debug - x86</tt> under <tt>Microsoft Phoenix SDK
+                    June 2008</tt> in the Start menu, and select <tt>Run as
+                    administrator</tt>.</p>
+                </li>
+                <li>
+                  <p>To launch Cygwin, enter the following command at
+                    the prompt:
+                    <code><em>&lt;CYGWIN_DIR&gt;</em>\cygwin.bat</code>,
+                    where <tt>CYGWIN_DIR</tt> is the absolute path for
+                    the root directory of Cygwin, usually located at
+                    <tt>C:\cygwin</tt>.</p>
+                </li>
+                <li>
+                  <p>Navigate to the GameTime directory and run the following
+                    command at the prompt:
+                    <code>./configure &amp;&amp; make install</code></p>
+                  <p>
+                    This command will configure different files within
+                    GameTime. It will then install the Python
+                    <tt>setuptools</tt> module, which will be used to install
+                    the following PyPI packages: <tt>networkx</tt>,
+                    <tt>numpy</tt>, <tt>ply</tt>, <tt>pulp</tt>,
+                    <tt>pyparsing</tt>, and <tt>pyside</tt>. Finally,
+                    GameTime itself will be installed as a Python module.
+                  </p>
+                </li>
+              </ol>
+            </div>
+
+            <div id="step-5">
+              <h2><em>Step 5</em>: Test of Installation</h2>
+              <p>To test your installation, navigate to the GameTime directory
+              in the Phoenix window running Cygwin. From within the directory,
+              run the command: <code>./verify-installation</code></p>
+
+              <p>This should conduct a GameTime analysis on exemplar code that
+                performs modular exponentiation, available in the directory
+                <tt>demo/modexp_unrolled</tt>. GameTime should run completely
+                without producing errors.</p>
+
+              <div class="callout callout-info">
+                <p>The command assumes default values for the solvers that
+                  GameTime uses in its verification of the installation:
+                  The default SMT solver is Z3 and the default ILP solver is
+                  the solver that is included with the <tt>pulp</tt> Python
+                  package.</p>
+                <p>To specify a different ILP solver, use the <code>-i</code>
+                  (or <code>--ilp-solver</code>) command-line switch,
+                  followed by the name of the ILP solver. The names supported
+                  are the same as those supported by the
+                  <code>&lt;ilp-solver&gt;</code> tag in a project
+                  configuration file, as enumerated
+                  <span><a href="../documentation/#acc-ilp-solver">here</a></span>.</p>
+                <p>To specify a different SMT solver, use the <code>-s</code>
+                  (or <code>--smt-solver</code>) command-line switch,
+                  followed by the name of the SMT solver. The names supported
+                  are the same as those supported by the
+                  <code>&lt;smt-solver&gt;</code> tag in a project
+                  configuration file, as enumerated
+                  <span><a href="../documentation/#acc-smt-solver">here</a></span>.</p>
+                <span>So, for example, if the ILP solver available is GLPK and
+                  the SMT solver available is Boolector, the corresponding
+                  verification command would be
+                  <code>./verify-installation -i glpk -s boolector</code></span>
+              </div>
+
+              <p>If you have successfully installed GameTime, try out
+                the <a href="../tutorials">tutorials</a>.</p>
+            </div>
+
+            <div id="appendix">
+              <h2><em>Appendix</em>: Modification of the <tt>PATH</tt>
+                System Variable</h2>
+              <p>To add a path to the <tt>PATH</tt> system variable,
+                add this line to the end of the <tt>.bashrc</tt> file for
+                Cygwin, usually located in the <tt>home</tt> subdirectory
+                of the Cygwin directory:</p>
+
+                <p><code>PATH=<em>&lt;NEW_PATH&gt;</em>:$PATH</code></p>
+
+                <p>where <tt>NEW_PATH</tt> is the Unix form of the absolute
+                path that needs to be added. So, for example, if the directory
+                of the Python interpreter is located at <tt>C:\Python27</tt>,
+                and this directory needs to be added to the <tt>PATH</tt>
+                system variable, <tt>NEW_PATH</tt> will be
+                <tt>/cygdrive/c/Python27</tt>. The command
+                <code>cygpath -u</code> can be used to determine
+                <tt>NEW_PATH</tt>.</p>
+            </div>
+          </div>
+        </div>
+      </div> <!-- container -->
+
+      <hr/>
+
+      <div id="footer" class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p class="text-center">Website designed with, and inspired by,
+            <a href="http://getbootstrap.com/">Bootstrap</a> |
+            <a href="http://bootswatch.com/cosmo/">Cosmo</a>
+            theme from <a href="http://bootswatch.com/">Bootswatch</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- This code that loads JavaScript files is placed at the end of
+      the document, so that the pages load faster. -->
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/gametime.js"></script>
+    <!-- <script src="js/google-code-prettify/prettify.js"></script> -->
+  </body>
+</html>
